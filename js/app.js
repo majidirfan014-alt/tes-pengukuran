@@ -59,7 +59,7 @@ function handleHashRoute() {
         return;
     }
     if (u.role !== 'superadmin') {
-        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma'];
+        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(view) >= 0) {
             location.hash = '#admin/hasil-publik';
             showPanel();
@@ -293,6 +293,7 @@ function showPanel() {
     document.getElementById('navCaborItem').style.display = isAdmin ? '' : 'none';
     document.getElementById('navAkses').style.display = isAdmin ? '' : 'none';
     document.getElementById('navNorma').style.display = isAdmin ? '' : 'none';
+    document.getElementById('navSinkron').style.display = isAdmin ? '' : 'none';
     document.getElementById('btnHapusSemua').style.display = isAdmin ? '' : 'none';
     document.getElementById('cardTambahCabor').style.display = isAdmin ? '' : 'none';
     // Menu publik (non-superadmin)
@@ -351,7 +352,7 @@ function showAdminView(name) {
     }
     // Blokir non-superadmin dari menu admin
     if (u.role !== 'superadmin') {
-        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma'];
+        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(name) >= 0) {
             showAdminView('hasil-publik');
             return;
@@ -376,6 +377,7 @@ function showAdminView(name) {
     if (name === 'caboritem') renderCaborItem();
     if (name === 'akses') renderAkses();
     if (name === 'norma') { renderNormaTable(); renderRumusKartu(); renderKeteranganSumber(); }
+    if (name === 'sinkron' && typeof renderSinkron === 'function') renderSinkron();
     if (name === 'hasil-publik') renderHasilPublik();
     if (name === 'rekomendasi') {
         // Tab visibility

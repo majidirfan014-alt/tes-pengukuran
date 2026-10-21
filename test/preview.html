@@ -120,7 +120,7 @@
 
     var frame = document.getElementById('app');
     function mulaiFrame() {
-        frame.src = isLanding ? '../index.html' : '../index.html#admin/rekomendasi';
+        frame.src = isLanding ? '../index.html' : '../index.html#admin/' + (qs.get('view') || 'rekomendasi');
     }
     // tplold=1: simulasikan cache template LAMA (tanpa ID baru) di localStorage
     if (!isLanding && qs.get('tplold') === '1') {

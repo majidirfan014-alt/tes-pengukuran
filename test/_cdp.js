@@ -1,6 +1,7 @@
 // _cdp.js — verifikasi header via Chrome DevTools Protocol (viewport CSS px sesungguhnya)
-// pakai: node test\_cdp.js <width> <outPng> [url]
+// pakai: node test\_cdp.js <width> <outPng> [url] [exprFile]
 // url default: landing index.html; preview: http://localhost/Tes%20Pengukuran/test/preview.html?u=superadmin&a=0&rast=data
+// exprFile: berkas JS berisi ekspresi (returnByValue + awaitPromise) hasilnya dicetak sebagai "extra"
 const { spawn } = require('child_process');
 const fs = require('fs');
 const os = require('os');
@@ -10,6 +11,7 @@ const CHROME = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const WIDTH = parseInt(process.argv[2] || '390', 10);
 const OUT = process.argv[3] || path.join(__dirname, 'screenshots', `usc-cdp-${WIDTH}.png`);
 const URL = process.argv[4] || 'http://localhost/Tes%20Pengukuran/index.html';
+const EXPR_FILE = process.argv[5] || null;
 const PORT = 9333 + (WIDTH % 100);
 const udd = fs.mkdtempSync(path.join(os.tmpdir(), 'cdp-'));
 
@@ -77,6 +79,8 @@ function cdp(ws) {
       const boxCs = boxEl ? getComputedStyle(boxEl) : null;
       const res = performance.getEntriesByType('resource').map((e) => e.name).filter((n) => /logo/.test(n));
       const rastLines = d.body ? d.body.innerText.split('\\n').map(function(s){ return s.trim(); }).filter(function(s){ return /RAST/i.test(s); }).slice(0, 40) : [];
+      const snk = d.getElementById('view-sinkron');
+      const sinkronLines = snk ? snk.innerText.split('\\n').map(function(s){ return s.trim(); }).filter(function(s){ return s.length; }).slice(0, 30) : [];
       return JSON.stringify({
         page: inFrame ? 'iframe' : 'top',
         title: d.title,
@@ -89,6 +93,7 @@ function cdp(ws) {
         adaHurufT: !!document.querySelector('#landingPage header div > div:last-child') && Array.from(document.querySelectorAll('#landingPage header div')).some((d) => d.children.length === 0 && d.textContent.trim() === 'T'),
         kids,
         rastLines,
+        sinkronLines,
         logoRes: res
       });
     })()`;
@@ -102,6 +107,14 @@ function cdp(ws) {
     if (!ev) throw new Error('evaluate gagal: body tidak siap / ' + (ev ? '' : 'timeout'));
     const info = JSON.parse(ev.result.value);
     info.consoleErrors = consoleErrors;
+
+    if (EXPR_FILE) {
+      const code = fs.readFileSync(EXPR_FILE, 'utf8');
+      const r = await c.send('Runtime.evaluate', { expression: code, returnByValue: true, awaitPromise: true });
+      info.extra = r.exceptionDetails
+        ? 'EXTRA-ERR ' + (r.exceptionDetails.exception?.description || r.exceptionDetails.text)
+        : r.result.value;
+    }
 
     const shot = await c.send('Page.captureScreenshot', { format: 'png' });
     fs.mkdirSync(path.dirname(OUT), { recursive: true });

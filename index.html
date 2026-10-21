@@ -187,6 +187,7 @@
                 <button data-view="caboritem" onclick="showAdminView('caboritem')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navCaborItem">Cabor &amp; Item Tes</button>
                 <button data-view="akses" onclick="showAdminView('akses')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navAkses">Kode Akses</button>
                 <button data-view="norma" onclick="showAdminView('norma')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navNorma">Norma Tes</button>
+                <button data-view="sinkron" onclick="showAdminView('sinkron')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navSinkron">Sinkron Data</button>
                 <button data-view="rekomendasi" onclick="showAdminView('rekomendasi')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navRekomendasi">Rekomendasi</button>
                 <button data-view="hasil-publik" onclick="showAdminView('hasil-publik')" class="nav-admin px-3 py-2 rounded-lg text-xs hidden" id="navHasilPublik">Data Hasil Tes Fisik</button>
             </nav>
@@ -537,6 +538,49 @@
         </div>
     </section>
 
+    <!-- VIEW: Sinkron Data (Firestore) -->
+    <section id="view-sinkron" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <div class="rounded-2xl bg-gradient-to-r from-sky-700 to-indigo-800 text-white p-6">
+            <p class="text-xs uppercase tracking-wide text-sky-200">Firebase Firestore</p>
+            <h2 class="text-2xl font-black">Sinkron Data</h2>
+            <p class="text-sky-100 text-sm">Cadangkan data localStorage ke Firestore, atau pulihkan data dari Firestore.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="stat-card"><p class="stat-label">Atlet</p><p class="stat-value" id="sinkronJmlAtlet">-</p></div>
+            <div class="stat-card"><p class="stat-label">Sesi Tes</p><p class="stat-value" id="sinkronJmlSesi">-</p></div>
+            <div class="stat-card"><p class="stat-label">Cabor</p><p class="stat-value" id="sinkronJmlCabor">-</p></div>
+            <div class="stat-card"><p class="stat-label">User</p><p class="stat-value" id="sinkronJmlUser">-</p></div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Backup &amp; Pulihkan</p></div>
+            <div class="card-body space-y-4">
+                <div class="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm space-y-1">
+                    <p><span class="text-slate-500">Sinkron terakhir:</span> <span id="sinkronTerakhir" class="font-semibold">Belum pernah sinkron</span></p>
+                    <p id="sinkronStatus" class="text-sm font-semibold text-slate-500">-</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="sinkronBackup()" class="btn btn-primary" id="btnSinkronBackup">Backup ke Firestore</button>
+                    <button onclick="sinkronPulihkan()" class="btn btn-outline" id="btnSinkronPulihkan">Pulihkan dari Firestore</button>
+                </div>
+                <ul class="text-xs text-slate-500 space-y-1 list-disc list-inside">
+                    <li><strong>Backup</strong> mengirim seluruh data lokal (atlet, sesi, cabor, user) ke Firestore dan menyingkirkan dokumen remote yang sudah tidak ada di lokal.</li>
+                    <li><strong>Pulihkan</strong> MENGGANTI semua data lokal dengan isi Firestore — data lokal yang tidak ada di Firestore akan hilang.</li>
+                    <li>Sinkron hanya bisa dilakukan oleh superadmin.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Informasi Proyek</p></div>
+            <div class="card-body text-sm text-slate-600 space-y-1">
+                <p>Proyek: <span class="font-semibold">tespengukuran-bb50b</span> · Koleksi: users, cabor, atlet, sesi, itemCustom, aksesLog, sinkron.</p>
+                <p class="text-amber-600">Catatan keamanan: Firestore Rules saat ini mengizinkan baca/tulis publik hingga 20 Nov 2040. Batasi rules (mis. hanya koleksi aplikasi &amp; tanpa data sensitif) sebelum data produksi masuk.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- VIEW: Data Hasil Tes Fisik (Tamu - Read Only) -->
     <section id="view-hasil-publik" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
         <div class="rounded-2xl bg-gradient-to-r from-emerald-700 to-teal-800 text-white p-6">
@@ -701,5 +745,9 @@
 <script src="js/data.js?v=20261021rasttpe"></script>
 <script src="js/store.js?v=20261021rasttpe"></script>
 <script src="js/app.js?v=20261021rasttpe"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js?v=20261021firebase"></script>
+<script src="js/sync.js?v=20261021firebase"></script>
 </body>
 </html>
