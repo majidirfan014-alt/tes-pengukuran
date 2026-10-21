@@ -1,0 +1,3169 @@
+{
+  "meta": {
+    "judul": "Norma Tes Fisik - KONI Kabupaten Tuban",
+    "tanggal_unduh": "2026-10-18",
+    "sumber_data": "Konfigurasi penilaian di index.html (caborData, atletikNomor, ITEM_KELAMIN, NORMA_ITEM_KELAMIN) - sama dengan logika perhitungan hasil tes",
+    "kategori_penilaian": "Baik Sekali | Baik | Cukup | Kurang | Kurang Sekali",
+    "catatan": "Halaman read-only. Tidak ada angka norma baru; rentang kategori diturunkan dari mean & sd dengan breakpoint z = 2, 1, 0, -1."
+  },
+  "konfigurasi": {
+    "kategori_dari_persen": [
+      {
+        "kategori": "Baik Sekali",
+        "min_persen": 90
+      },
+      {
+        "kategori": "Baik",
+        "min_persen": 60
+      },
+      {
+        "kategori": "Cukup",
+        "min_persen": 40
+      },
+      {
+        "kategori": "Kurang",
+        "min_persen": 20
+      },
+      {
+        "kategori": "Kurang Sekali",
+        "min_persen": 0
+      }
+    ],
+    "breakpoint_z_kategori": {
+      "baik_sekali": 2,
+      "baik": 0.25,
+      "cukup": -0.75,
+      "kurang": -1.75
+    },
+    "bleep_maks_shuttle": [
+      7,
+      8,
+      9,
+      9,
+      9,
+      10,
+      10,
+      11,
+      11,
+      11,
+      12,
+      12,
+      13,
+      13,
+      13,
+      14,
+      14,
+      15,
+      15,
+      16,
+      16
+    ],
+    "catatan_ambang": "Breakpoint z = 2, 0.25, -0.75, -1.75 (konsisten dengan rumus no. 5 dan ambang 90/60/40/20)."
+  },
+  "items": [
+    {
+      "no": 1,
+      "nama": "10 Hop Jump Kanan",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 2,
+      "nama": "10 Hop Jump Kiri",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 3,
+      "nama": "1RM Squat",
+      "satuan": "kg",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 4,
+      "nama": "3 Hop Jump Kanan",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 5,
+      "nama": "3 Hop Jump Kiri",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 6,
+      "nama": "Back Up 1 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 7,
+      "nama": "Back Up 2 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Tanpa norma - tampil \"Norma belum diatur\" dan tidak ikut dihitung ke performa"
+    },
+    {
+      "no": 8,
+      "nama": "Bleep Test",
+      "satuan": "ml/kg/min",
+      "komponen_fisik": "Daya Tahan Kardiorespirasi",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Input level.shuttle dikonversi ke VO2max, lalu dinilai dengan z-score"
+    },
+    {
+      "no": 9,
+      "nama": "Core Stability 12 Level",
+      "satuan": "level",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 10,
+      "nama": "Expanding Pull",
+      "satuan": "kg",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 11,
+      "nama": "Expanding Push",
+      "satuan": "kg",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 12,
+      "nama": "Hand Grip Kanan",
+      "satuan": "kg",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 13,
+      "nama": "Hand Grip Kiri",
+      "satuan": "kg",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 14,
+      "nama": "Hand Wall Toss Test",
+      "satuan": "kali",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 15,
+      "nama": "Illinois Agility",
+      "satuan": "detik",
+      "komponen_fisik": "Kelincahan",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 16,
+      "nama": "Medicine Chest Pass 3 Kg",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik (jarak lempar)",
+      "berlaku_untuk": "Perempuan",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 17,
+      "nama": "Medicine Chest Pass 5 Kg",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik (jarak lempar)",
+      "berlaku_untuk": "Laki-laki",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 18,
+      "nama": "Medicine Overhead Throw",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 19,
+      "nama": "Medicine Overhead Throw 3 Kg",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik (jarak lempar)",
+      "berlaku_untuk": "Perempuan",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 20,
+      "nama": "Medicine Overhead Throw 5 kg",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik (jarak lempar)",
+      "berlaku_untuk": "Laki-laki",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 21,
+      "nama": "Plank",
+      "satuan": "detik",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Tanpa norma - tampil \"Norma belum diatur\" dan tidak ikut dihitung ke performa"
+    },
+    {
+      "no": 22,
+      "nama": "Pull Up 1 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 23,
+      "nama": "Push Up 1 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Kekuatan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 24,
+      "nama": "RAST Fatigue Index",
+      "satuan": "-",
+      "komponen_fisik": "Daya Anaerob",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Ditampilkan sebagai informasi - tidak ikut dihitung ke performa"
+    },
+    {
+      "no": 25,
+      "nama": "RAST Test",
+      "satuan": "watt",
+      "komponen_fisik": "Daya Anaerob",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Nilai = rata-rata daya 6 sprint (watt), dinilai dengan z-score"
+    },
+    {
+      "no": 26,
+      "nama": "Shoulder Mobility Kanan",
+      "satuan": "cm",
+      "komponen_fisik": "Fleksibilitas",
+      "arah_nilai": "Makin rendah makin baik (jarak antar tangan)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan skor Brockport (0-3) yang dikonversi ke persentase"
+    },
+    {
+      "no": 27,
+      "nama": "Shoulder Mobility Kiri",
+      "satuan": "cm",
+      "komponen_fisik": "Fleksibilitas",
+      "arah_nilai": "Makin rendah makin baik (jarak antar tangan)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan skor Brockport (0-3) yang dikonversi ke persentase"
+    },
+    {
+      "no": 28,
+      "nama": "Shuttle Run",
+      "satuan": "detik",
+      "komponen_fisik": "Kelincahan",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 29,
+      "nama": "Sit & Reach",
+      "satuan": "cm",
+      "komponen_fisik": "Fleksibilitas",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 30,
+      "nama": "Sit Up 1 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 31,
+      "nama": "Sit Up 2 Menit",
+      "satuan": "kali",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 32,
+      "nama": "Sprint 20 m",
+      "satuan": "detik",
+      "komponen_fisik": "Kecepatan",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 33,
+      "nama": "Sprint 30 m",
+      "satuan": "detik",
+      "komponen_fisik": "Kecepatan",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 34,
+      "nama": "Standing Broad Jump",
+      "satuan": "meter",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 35,
+      "nama": "Stork Stand Kanan",
+      "satuan": "detik",
+      "komponen_fisik": "Keseimbangan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 36,
+      "nama": "Stork Stand Kiri",
+      "satuan": "detik",
+      "komponen_fisik": "Keseimbangan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 37,
+      "nama": "Vertical Jump",
+      "satuan": "m",
+      "komponen_fisik": "Daya Ledak",
+      "arah_nilai": "Makin tinggi makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 38,
+      "nama": "Wall Sit",
+      "satuan": "detik",
+      "komponen_fisik": "Daya Tahan",
+      "arah_nilai": "Tergantung cabor (lihat detail)",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 39,
+      "nama": "Zig Zag Run Test",
+      "satuan": "detik",
+      "komponen_fisik": "Kelincahan",
+      "arah_nilai": "Makin rendah makin baik",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Dinilai dengan z-score terhadap mean & sd norma"
+    },
+    {
+      "no": 40,
+      "nama": "% Performance",
+      "satuan": "%",
+      "komponen_fisik": "Ringkasan (override)",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Override Excel - persentase performa langsung dipakai bila tersedia"
+    },
+    {
+      "no": 41,
+      "nama": "Tinggi Badan",
+      "satuan": "cm",
+      "komponen_fisik": "Antropometri",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Data antropometri - tidak dinilai"
+    },
+    {
+      "no": 42,
+      "nama": "Berat Badan",
+      "satuan": "kg",
+      "komponen_fisik": "Antropometri",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Data antropometri - tidak dinilai"
+    },
+    {
+      "no": 43,
+      "nama": "IMT",
+      "satuan": "kg/m2",
+      "komponen_fisik": "Antropometri",
+      "arah_nilai": "-",
+      "berlaku_untuk": "Semua atlet",
+      "status_penilaian": "Data antropometri (Indeks Massa Tubuh) - tidak dinilai"
+    }
+  ],
+  "norma": [
+    {
+      "item": "10 Hop Jump Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 14,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 19",
+        ">= 14,63 dan < 19",
+        ">= 12,13 dan < 14,63",
+        ">= 9,63 dan < 12,13",
+        "< 9,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Balap Sepeda",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 14,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 19",
+        ">= 14,63 dan < 19",
+        ">= 12,13 dan < 14,63",
+        ">= 9,63 dan < 12,13",
+        "< 9,63"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 17,
+      "sd": 2.8,
+      "rentang_acuan": [
+        ">= 22,6",
+        ">= 17,7 dan < 22,6",
+        ">= 14,9 dan < 17,7",
+        ">= 12,1 dan < 14,9",
+        "< 12,1"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Balap Sepeda",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 17,
+      "sd": 2.8,
+      "rentang_acuan": [
+        ">= 22,6",
+        ">= 17,7 dan < 22,6",
+        ">= 14,9 dan < 17,7",
+        ">= 12,1 dan < 14,9",
+        "< 12,1"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 13.5,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 18,5",
+        ">= 14,13 dan < 18,5",
+        ">= 11,63 dan < 14,13",
+        ">= 9,13 dan < 11,63",
+        "< 9,13"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Balap Sepeda",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 13.5,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 18,5",
+        ">= 14,13 dan < 18,5",
+        ">= 11,63 dan < 14,13",
+        ">= 9,13 dan < 11,63",
+        "< 9,13"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 16.5,
+      "sd": 2.8,
+      "rentang_acuan": [
+        ">= 22,1",
+        ">= 17,2 dan < 22,1",
+        ">= 14,4 dan < 17,2",
+        ">= 11,6 dan < 14,4",
+        "< 11,6"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Balap Sepeda",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "10 Hop Jump Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 16.5,
+      "sd": 2.8,
+      "rentang_acuan": [
+        ">= 22,1",
+        ">= 17,2 dan < 22,1",
+        ">= 14,4 dan < 17,2",
+        ">= 11,6 dan < 14,4",
+        "< 11,6"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "1RM Squat",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 90,
+      "sd": 25,
+      "rentang_acuan": [
+        ">= 140",
+        ">= 96,25 dan < 140",
+        ">= 71,25 dan < 96,25",
+        ">= 46,25 dan < 71,25",
+        "< 46,25"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tinju",
+        "Angkat Besi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "1RM Squat",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 90,
+      "sd": 25,
+      "rentang_acuan": [
+        ">= 140",
+        ">= 96,25 dan < 140",
+        ">= 71,25 dan < 96,25",
+        ">= 46,25 dan < 71,25",
+        "< 46,25"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "1RM Squat",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 110,
+      "sd": 35,
+      "rentang_acuan": [
+        ">= 180",
+        ">= 118,75 dan < 180",
+        ">= 83,75 dan < 118,75",
+        ">= 48,75 dan < 83,75",
+        "< 48,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tinju",
+        "Angkat Besi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "1RM Squat",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 110,
+      "sd": 35,
+      "rentang_acuan": [
+        ">= 180",
+        ">= 118,75 dan < 180",
+        ">= 83,75 dan < 118,75",
+        ">= 48,75 dan < 83,75",
+        "< 48,75"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "3 Hop Jump Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 5.5,
+      "sd": 1,
+      "rentang_acuan": [
+        ">= 7,5",
+        ">= 5,75 dan < 7,5",
+        ">= 4,75 dan < 5,75",
+        ">= 3,75 dan < 4,75",
+        "< 3,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Pencak Silat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "3 Hop Jump Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 6.5,
+      "sd": 1.2,
+      "rentang_acuan": [
+        ">= 8,9",
+        ">= 6,8 dan < 8,9",
+        ">= 5,6 dan < 6,8",
+        ">= 4,4 dan < 5,6",
+        "< 4,4"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Pencak Silat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "3 Hop Jump Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 5.2,
+      "sd": 1,
+      "rentang_acuan": [
+        ">= 7,2",
+        ">= 5,45 dan < 7,2",
+        ">= 4,45 dan < 5,45",
+        ">= 3,45 dan < 4,45",
+        "< 3,45"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Pencak Silat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "3 Hop Jump Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 6.2,
+      "sd": 1.2,
+      "rentang_acuan": [
+        ">= 8,6",
+        ">= 6,5 dan < 8,6",
+        ">= 5,3 dan < 6,5",
+        ">= 4,1 dan < 5,3",
+        "< 4,1"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Pencak Silat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Back Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 23,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 39",
+        ">= 25 dan < 39",
+        ">= 17 dan < 25",
+        ">= 9 dan < 17",
+        "< 9"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Back Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 32,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 52",
+        ">= 34,5 dan < 52",
+        ">= 24,5 dan < 34,5",
+        ">= 14,5 dan < 24,5",
+        "< 14,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Back Up 2 Menit",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Tanpa norma - tampil \"Norma belum diatur\" dan tidak ikut dihitung ke performa"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Bleep Test",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 42,
+      "sd": 7,
+      "rentang_acuan": [
+        ">= 56",
+        ">= 43,75 dan < 56",
+        ">= 36,75 dan < 43,75",
+        ">= 29,75 dan < 36,75",
+        "< 29,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Kempo",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": "Varian norma untuk nomor Atletik (Lompat Tinggi, 5000m & 3000m, Dasa Lomba, Lempar Lembing) berbeda dari norma umum."
+    },
+    {
+      "item": "Bleep Test",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 38,
+      "sd": 7,
+      "rentang_acuan": [
+        ">= 52",
+        ">= 39,75 dan < 52",
+        ">= 32,75 dan < 39,75",
+        ">= 25,75 dan < 32,75",
+        "< 25,75"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": "Varian norma untuk nomor Atletik (Lompat Tinggi, 5000m & 3000m, Dasa Lomba, Lempar Lembing) berbeda dari norma umum."
+    },
+    {
+      "item": "Bleep Test",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 50,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 66",
+        ">= 52 dan < 66",
+        ">= 44 dan < 52",
+        ">= 36 dan < 44",
+        "< 36"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Kempo",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": "Varian norma untuk nomor Atletik (Lompat Tinggi, 5000m & 3000m, Dasa Lomba, Lempar Lembing) berbeda dari norma umum."
+    },
+    {
+      "item": "Bleep Test",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 44,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 60",
+        ">= 46 dan < 60",
+        ">= 38 dan < 46",
+        ">= 30 dan < 38",
+        "< 30"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": "Varian norma untuk nomor Atletik (Lompat Tinggi, 5000m & 3000m, Dasa Lomba, Lempar Lembing) berbeda dari norma umum."
+    },
+    {
+      "item": "Core Stability 12 Level",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 6,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 11",
+        ">= 6,63 dan < 11",
+        ">= 4,13 dan < 6,63",
+        ">= 1,63 dan < 4,13",
+        "< 1,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Core Stability 12 Level",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 6,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 11",
+        ">= 6,63 dan < 11",
+        ">= 4,13 dan < 6,63",
+        ">= 1,63 dan < 4,13",
+        "< 1,63"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Core Stability 12 Level",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 8,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 13",
+        ">= 8,63 dan < 13",
+        ">= 6,13 dan < 8,63",
+        ">= 3,63 dan < 6,13",
+        "< 3,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Core Stability 12 Level",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 8,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 13",
+        ">= 8,63 dan < 13",
+        ">= 6,13 dan < 8,63",
+        ">= 3,63 dan < 6,13",
+        "< 3,63"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Expanding Pull",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 22,
+      "sd": 7,
+      "rentang_acuan": [
+        ">= 36",
+        ">= 23,75 dan < 36",
+        ">= 16,75 dan < 23,75",
+        ">= 9,75 dan < 16,75",
+        "< 9,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Paralayang"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Expanding Pull",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 30,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 46",
+        ">= 32 dan < 46",
+        ">= 24 dan < 32",
+        ">= 16 dan < 24",
+        "< 16"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Paralayang"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Expanding Push",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 22,
+      "sd": 7,
+      "rentang_acuan": [
+        ">= 36",
+        ">= 23,75 dan < 36",
+        ">= 16,75 dan < 23,75",
+        ">= 9,75 dan < 16,75",
+        "< 9,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Paralayang"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Expanding Push",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 30,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 46",
+        ">= 32 dan < 46",
+        ">= 24 dan < 32",
+        ">= 16 dan < 24",
+        "< 16"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Paralayang"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Grip Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 32,
+      "sd": 9,
+      "rentang_acuan": [
+        ">= 50",
+        ">= 34,25 dan < 50",
+        ">= 25,25 dan < 34,25",
+        ">= 16,25 dan < 25,25",
+        "< 16,25"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Grip Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 42,
+      "sd": 11,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 44,75 dan < 64",
+        ">= 33,75 dan < 44,75",
+        ">= 22,75 dan < 33,75",
+        "< 22,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Grip Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 29,
+      "sd": 8,
+      "rentang_acuan": [
+        ">= 45",
+        ">= 31 dan < 45",
+        ">= 23 dan < 31",
+        ">= 15 dan < 23",
+        "< 15"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Grip Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 38,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 58",
+        ">= 40,5 dan < 58",
+        ">= 30,5 dan < 40,5",
+        ">= 20,5 dan < 30,5",
+        "< 20,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Pencak Silat",
+        "Selam",
+        "Arung Jeram",
+        "Panahan",
+        "Paralayang",
+        "Petanque",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Wall Toss Test",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 18,
+      "sd": 6,
+      "rentang_acuan": [
+        ">= 30",
+        ">= 19,5 dan < 30",
+        ">= 13,5 dan < 19,5",
+        ">= 7,5 dan < 13,5",
+        "< 7,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Pencak Silat",
+        "Balap Sepeda",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Hand Wall Toss Test",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 7,
+      "rentang_acuan": [
+        ">= 39",
+        ">= 26,75 dan < 39",
+        ">= 19,75 dan < 26,75",
+        ">= 12,75 dan < 19,75",
+        "< 12,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Pencak Silat",
+        "Balap Sepeda",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Illinois Agility",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 19,
+      "sd": 2.5,
+      "rentang_acuan": [
+        "<= 14",
+        "> 14 dan <= 18,38",
+        "> 18,38 dan <= 20,88",
+        "> 20,88 dan <= 23,38",
+        "> 23,38"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Senam Gymnastic",
+        "IBC MMA"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Illinois Agility",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 16,
+      "sd": 2.2,
+      "rentang_acuan": [
+        "<= 11,6",
+        "> 11,6 dan <= 15,45",
+        "> 15,45 dan <= 17,65",
+        "> 17,65 dan <= 19,85",
+        "> 19,85"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Senam Gymnastic",
+        "IBC MMA"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 3 Kg",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Perempuan",
+      "mean": 6.5,
+      "sd": 1.5,
+      "rentang_acuan": [
+        ">= 9,5",
+        ">= 6,88 dan < 9,5",
+        ">= 5,38 dan < 6,88",
+        ">= 3,88 dan < 5,38",
+        "< 3,88"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 3 Kg",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Perempuan",
+      "mean": 8,
+      "sd": 1.8,
+      "rentang_acuan": [
+        ">= 11,6",
+        ">= 8,45 dan < 11,6",
+        ">= 6,65 dan < 8,45",
+        ">= 4,85 dan < 6,65",
+        "< 4,85"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 5 Kg",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 5.5,
+      "sd": 1.5,
+      "rentang_acuan": [
+        ">= 8,5",
+        ">= 5,88 dan < 8,5",
+        ">= 4,38 dan < 5,88",
+        ">= 2,88 dan < 4,38",
+        "< 2,88"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "IBC MMA",
+        "Pencak Silat",
+        "Selam",
+        "Paralayang",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 5 Kg",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Laki-laki",
+      "mean": 5.5,
+      "sd": 1.5,
+      "rentang_acuan": [
+        ">= 8,5",
+        ">= 5,88 dan < 8,5",
+        ">= 4,38 dan < 5,88",
+        ">= 2,88 dan < 4,38",
+        "< 2,88"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 5 Kg",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 7,
+      "sd": 1.8,
+      "rentang_acuan": [
+        ">= 10,6",
+        ">= 7,45 dan < 10,6",
+        ">= 5,65 dan < 7,45",
+        ">= 3,85 dan < 5,65",
+        "< 3,85"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "IBC MMA",
+        "Pencak Silat",
+        "Selam",
+        "Paralayang",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Chest Pass 5 Kg",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Laki-laki",
+      "mean": 7,
+      "sd": 1.8,
+      "rentang_acuan": [
+        ">= 10,6",
+        ">= 7,45 dan < 10,6",
+        ">= 5,65 dan < 7,45",
+        ">= 3,85 dan < 5,65",
+        "< 3,85"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 6,
+      "sd": 2,
+      "rentang_acuan": [
+        ">= 10",
+        ">= 6,5 dan < 10",
+        ">= 4,5 dan < 6,5",
+        ">= 2,5 dan < 4,5",
+        "< 2,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 8,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 13",
+        ">= 8,63 dan < 13",
+        ">= 6,13 dan < 8,63",
+        ">= 3,63 dan < 6,13",
+        "< 3,63"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw 3 Kg",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Perempuan",
+      "mean": 7,
+      "sd": 2,
+      "rentang_acuan": [
+        ">= 11",
+        ">= 7,5 dan < 11",
+        ">= 5,5 dan < 7,5",
+        ">= 3,5 dan < 5,5",
+        "< 3,5"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw 3 Kg",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Perempuan",
+      "mean": 9,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 14",
+        ">= 9,63 dan < 14",
+        ">= 7,13 dan < 9,63",
+        ">= 4,63 dan < 7,13",
+        "< 4,63"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw 5 kg",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Laki-laki",
+      "mean": 6,
+      "sd": 2,
+      "rentang_acuan": [
+        ">= 10",
+        ">= 6,5 dan < 10",
+        ">= 4,5 dan < 6,5",
+        ">= 2,5 dan < 4,5",
+        "< 2,5"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Medicine Overhead Throw 5 kg",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Laki-laki",
+      "mean": 8,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 13",
+        ">= 8,63 dan < 13",
+        ">= 6,13 dan < 8,63",
+        ">= 3,63 dan < 6,13",
+        "< 3,63"
+      ],
+      "sumber": "NORMA_ITEM_KELAMIN (norma cadangan item berbasis kelamin)",
+      "dipakai": [
+        "Norma cadangan item berbasis kelamin"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Plank",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Tanpa norma - tampil \"Norma belum diatur\" dan tidak ikut dihitung ke performa"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Pull Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 8,
+      "sd": 4,
+      "rentang_acuan": [
+        ">= 16",
+        ">= 9 dan < 16",
+        ">= 5 dan < 9",
+        ">= 1 dan < 5",
+        "< 1"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Sambo",
+        "Tinju",
+        "Angkat Besi",
+        "Kempo",
+        "Pencak Silat",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Pull Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 14,
+      "sd": 5,
+      "rentang_acuan": [
+        ">= 24",
+        ">= 15,25 dan < 24",
+        ">= 10,25 dan < 15,25",
+        ">= 5,25 dan < 10,25",
+        "< 5,25"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Sambo",
+        "Tinju",
+        "Angkat Besi",
+        "Kempo",
+        "Pencak Silat",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Push Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 9,
+      "rentang_acuan": [
+        ">= 43",
+        ">= 27,25 dan < 43",
+        ">= 18,25 dan < 27,25",
+        ">= 9,25 dan < 18,25",
+        "< 9,25"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Kempo",
+        "Selam",
+        "Balap Sepeda",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Push Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 9,
+      "rentang_acuan": [
+        ">= 43",
+        ">= 27,25 dan < 43",
+        ">= 18,25 dan < 27,25",
+        ">= 9,25 dan < 18,25",
+        "< 9,25"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Push Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 35,
+      "sd": 11,
+      "rentang_acuan": [
+        ">= 57",
+        ">= 37,75 dan < 57",
+        ">= 26,75 dan < 37,75",
+        ">= 15,75 dan < 26,75",
+        "< 15,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "IBC MMA",
+        "Kempo",
+        "Selam",
+        "Balap Sepeda",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Push Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 35,
+      "sd": 11,
+      "rentang_acuan": [
+        ">= 57",
+        ">= 37,75 dan < 57",
+        ">= 26,75 dan < 37,75",
+        ">= 15,75 dan < 26,75",
+        "< 15,75"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "RAST Fatigue Index",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 1.5,
+      "sd": 0.8,
+      "rentang_acuan": [
+        "<= -0,1",
+        "> -0,1 dan <= 1,3",
+        "> 1,3 dan <= 2,1",
+        "> 2,1 dan <= 2,9",
+        "> 2,9"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "IBC MMA",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": "Norma tersedia di konfigurasi, tetapi item ini TIDAK ikut dihitung ke performa."
+    },
+    {
+      "item": "RAST Fatigue Index",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 1.8,
+      "sd": 0.9,
+      "rentang_acuan": [
+        "<= 0",
+        "> 0 dan <= 1,58",
+        "> 1,58 dan <= 2,48",
+        "> 2,48 dan <= 3,38",
+        "> 3,38"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "IBC MMA",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": "Norma tersedia di konfigurasi, tetapi item ini TIDAK ikut dihitung ke performa."
+    },
+    {
+      "item": "RAST Test",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 7,
+      "sd": 2,
+      "rentang_acuan": [
+        ">= 11",
+        ">= 7,5 dan < 11",
+        ">= 5,5 dan < 7,5",
+        ">= 3,5 dan < 5,5",
+        "< 3,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "IBC MMA",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "RAST Test",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 9,
+      "sd": 2.5,
+      "rentang_acuan": [
+        ">= 14",
+        ">= 9,63 dan < 14",
+        ">= 7,13 dan < 9,63",
+        ">= 4,63 dan < 7,13",
+        "< 4,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "IBC MMA",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Shoulder Mobility Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 28,
+      "sd": 6,
+      "rentang_acuan": [
+        "<= 16",
+        "> 16 dan <= 26,5",
+        "> 26,5 dan <= 32,5",
+        "> 32,5 dan <= 38,5",
+        "> 38,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Selam",
+        "Petanque"
+      ],
+      "catatan": "Mean/sd di bawah tersimpan di konfigurasi cabor tetapi TIDAK dipakai perhitungan (penilaian memakai skor Brockport)."
+    },
+    {
+      "item": "Shoulder Mobility Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 33,
+      "sd": 6,
+      "rentang_acuan": [
+        "<= 21",
+        "> 21 dan <= 31,5",
+        "> 31,5 dan <= 37,5",
+        "> 37,5 dan <= 43,5",
+        "> 43,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Selam",
+        "Petanque"
+      ],
+      "catatan": "Mean/sd di bawah tersimpan di konfigurasi cabor tetapi TIDAK dipakai perhitungan (penilaian memakai skor Brockport)."
+    },
+    {
+      "item": "Shoulder Mobility Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 28,
+      "sd": 6,
+      "rentang_acuan": [
+        "<= 16",
+        "> 16 dan <= 26,5",
+        "> 26,5 dan <= 32,5",
+        "> 32,5 dan <= 38,5",
+        "> 38,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Selam",
+        "Petanque"
+      ],
+      "catatan": "Mean/sd di bawah tersimpan di konfigurasi cabor tetapi TIDAK dipakai perhitungan (penilaian memakai skor Brockport)."
+    },
+    {
+      "item": "Shoulder Mobility Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 33,
+      "sd": 6,
+      "rentang_acuan": [
+        "<= 21",
+        "> 21 dan <= 31,5",
+        "> 31,5 dan <= 37,5",
+        "> 37,5 dan <= 43,5",
+        "> 43,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Gulat",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Selam",
+        "Petanque"
+      ],
+      "catatan": "Mean/sd di bawah tersimpan di konfigurasi cabor tetapi TIDAK dipakai perhitungan (penilaian memakai skor Brockport)."
+    },
+    {
+      "item": "Shuttle Run",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 12,
+      "sd": 2,
+      "rentang_acuan": [
+        "<= 8",
+        "> 8 dan <= 11,5",
+        "> 11,5 dan <= 13,5",
+        "> 13,5 dan <= 15,5",
+        "> 15,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Shuttle Run",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 10,
+      "sd": 1.5,
+      "rentang_acuan": [
+        "<= 7",
+        "> 7 dan <= 9,63",
+        "> 9,63 dan <= 11,13",
+        "> 11,13 dan <= 12,63",
+        "> 12,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit & Reach",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 28,
+      "sd": 6,
+      "rentang_acuan": [
+        ">= 40",
+        ">= 29,5 dan < 40",
+        ">= 23,5 dan < 29,5",
+        ">= 17,5 dan < 23,5",
+        "< 17,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "IBC MMA",
+        "Kempo",
+        "Pencak Silat",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit & Reach",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 28,
+      "sd": 6,
+      "rentang_acuan": [
+        ">= 40",
+        ">= 29,5 dan < 40",
+        ">= 23,5 dan < 29,5",
+        ">= 17,5 dan < 23,5",
+        "< 17,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit & Reach",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 32,
+      "sd": 6,
+      "rentang_acuan": [
+        ">= 44",
+        ">= 33,5 dan < 44",
+        ">= 27,5 dan < 33,5",
+        ">= 21,5 dan < 27,5",
+        "< 21,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Judo",
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Tinju",
+        "Senam Gymnastic",
+        "IBC MMA",
+        "Kempo",
+        "Pencak Silat",
+        "Arung Jeram",
+        "Balap Sepeda",
+        "Panahan",
+        "Paralayang",
+        "Tarung Derajat",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit & Reach",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 32,
+      "sd": 6,
+      "rentang_acuan": [
+        ">= 44",
+        ">= 33,5 dan < 44",
+        ">= 27,5 dan < 33,5",
+        ">= 21,5 dan < 27,5",
+        "< 21,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 30,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 50",
+        ">= 32,5 dan < 50",
+        ">= 22,5 dan < 32,5",
+        ">= 12,5 dan < 22,5",
+        "< 12,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tinju",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 1 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 30,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 50",
+        ">= 32,5 dan < 50",
+        ">= 22,5 dan < 32,5",
+        ">= 12,5 dan < 22,5",
+        "< 12,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tinju",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 1 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba",
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 2 Menit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 45,
+      "sd": 15,
+      "rentang_acuan": [
+        ">= 75",
+        ">= 48,75 dan < 75",
+        ">= 33,75 dan < 48,75",
+        ">= 18,75 dan < 33,75",
+        "< 18,75"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sit Up 2 Menit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 60,
+      "sd": 18,
+      "rentang_acuan": [
+        ">= 96",
+        ">= 64,5 dan < 96",
+        ">= 46,5 dan < 64,5",
+        ">= 28,5 dan < 46,5",
+        "< 28,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 20 m",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 3.8,
+      "sd": 0.4,
+      "rentang_acuan": [
+        "<= 3",
+        "> 3 dan <= 3,7",
+        "> 3,7 dan <= 4,1",
+        "> 4,1 dan <= 4,5",
+        "> 4,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Tinju",
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 20 m",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 3.8,
+      "sd": 0.4,
+      "rentang_acuan": [
+        "<= 3",
+        "> 3 dan <= 3,7",
+        "> 3,7 dan <= 4,1",
+        "> 4,1 dan <= 4,5",
+        "> 4,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 20 m",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 3.2,
+      "sd": 0.3,
+      "rentang_acuan": [
+        "<= 2,6",
+        "> 2,6 dan <= 3,13",
+        "> 3,13 dan <= 3,43",
+        "> 3,43 dan <= 3,73",
+        "> 3,73"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Angkat Berat",
+        "Tinju",
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 20 m",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 3.2,
+      "sd": 0.3,
+      "rentang_acuan": [
+        "<= 2,6",
+        "> 2,6 dan <= 3,13",
+        "> 3,13 dan <= 3,43",
+        "> 3,43 dan <= 3,73",
+        "> 3,73"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lempar Lembing"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 30 m",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 5,
+      "sd": 0.5,
+      "rentang_acuan": [
+        "<= 4",
+        "> 4 dan <= 4,88",
+        "> 4,88 dan <= 5,38",
+        "> 5,38 dan <= 5,88",
+        "> 5,88"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 30 m",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 5,
+      "sd": 0.5,
+      "rentang_acuan": [
+        "<= 4",
+        "> 4 dan <= 4,88",
+        "> 4,88 dan <= 5,38",
+        "> 5,38 dan <= 5,88",
+        "> 5,88"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 30 m",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 4.3,
+      "sd": 0.4,
+      "rentang_acuan": [
+        "<= 3,5",
+        "> 3,5 dan <= 4,2",
+        "> 4,2 dan <= 4,6",
+        "> 4,6 dan <= 5",
+        "> 5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Panahan"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Sprint 30 m",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 4.3,
+      "sd": 0.4,
+      "rentang_acuan": [
+        "<= 3,5",
+        "> 3,5 dan <= 4,2",
+        "> 4,2 dan <= 4,6",
+        "> 4,6 dan <= 5",
+        "> 5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Standing Broad Jump",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 2,
+      "sd": 0.35,
+      "rentang_acuan": [
+        ">= 2,7",
+        ">= 2,09 dan < 2,7",
+        ">= 1,74 dan < 2,09",
+        ">= 1,39 dan < 1,74",
+        "< 1,39"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Standing Broad Jump",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 2,
+      "sd": 0.35,
+      "rentang_acuan": [
+        ">= 2,7",
+        ">= 2,09 dan < 2,7",
+        ">= 1,74 dan < 2,09",
+        ">= 1,39 dan < 1,74",
+        "< 1,39"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Standing Broad Jump",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 2.4,
+      "sd": 0.35,
+      "rentang_acuan": [
+        ">= 3,1",
+        ">= 2,49 dan < 3,1",
+        ">= 2,14 dan < 2,49",
+        ">= 1,79 dan < 2,14",
+        "< 1,79"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Atletik",
+        "Kempo"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Standing Broad Jump",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 2.4,
+      "sd": 0.35,
+      "rentang_acuan": [
+        ">= 3,1",
+        ">= 2,49 dan < 3,1",
+        ">= 2,14 dan < 2,49",
+        ">= 1,79 dan < 2,14",
+        "< 1,79"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - 5000m & 3000m",
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 45",
+        ">= 27,5 dan < 45",
+        ">= 17,5 dan < 27,5",
+        ">= 7,5 dan < 17,5",
+        "< 7,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Pencak Silat",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kanan",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 45",
+        ">= 27,5 dan < 45",
+        ">= 17,5 dan < 27,5",
+        ">= 7,5 dan < 17,5",
+        "< 7,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Pencak Silat",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kanan",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 45",
+        ">= 27,5 dan < 45",
+        ">= 17,5 dan < 27,5",
+        ">= 7,5 dan < 17,5",
+        "< 7,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Pencak Silat",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kiri",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 25,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 45",
+        ">= 27,5 dan < 45",
+        ">= 17,5 dan < 27,5",
+        ">= 7,5 dan < 17,5",
+        "< 7,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Gulat",
+        "Sambo",
+        "Tenis Meja",
+        "Senam Gymnastic",
+        "Angkat Besi",
+        "Pencak Silat",
+        "Panahan",
+        "Petanque"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Stork Stand Kiri",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 40,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 64",
+        ">= 43 dan < 64",
+        ">= 31 dan < 43",
+        ">= 19 dan < 31",
+        "< 19"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Dasa Lomba"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Vertical Jump",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 45,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 65",
+        ">= 47,5 dan < 65",
+        ">= 37,5 dan < 47,5",
+        ">= 27,5 dan < 37,5",
+        "< 27,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Senam Gymnastic"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Vertical Jump",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 45,
+      "sd": 10,
+      "rentang_acuan": [
+        ">= 65",
+        ">= 47,5 dan < 65",
+        ">= 37,5 dan < 47,5",
+        ">= 27,5 dan < 37,5",
+        "< 27,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Vertical Jump",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 55,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 79",
+        ">= 58 dan < 79",
+        ">= 46 dan < 58",
+        ">= 34 dan < 46",
+        "< 34"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Senam Gymnastic"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Vertical Jump",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 55,
+      "sd": 12,
+      "rentang_acuan": [
+        ">= 79",
+        ">= 58 dan < 79",
+        ">= 46 dan < 58",
+        ">= 34 dan < 46",
+        "< 34"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Wall Sit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 55,
+      "sd": 18,
+      "rentang_acuan": [
+        ">= 91",
+        ">= 59,5 dan < 91",
+        ">= 41,5 dan < 59,5",
+        ">= 23,5 dan < 41,5",
+        "< 23,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tenis Meja",
+        "Kempo",
+        "Balap Sepeda",
+        "Paralayang",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Wall Sit",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 55,
+      "sd": 18,
+      "rentang_acuan": [
+        ">= 91",
+        ">= 59,5 dan < 91",
+        ">= 41,5 dan < 59,5",
+        ">= 23,5 dan < 41,5",
+        "< 23,5"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Wall Sit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 75,
+      "sd": 20,
+      "rentang_acuan": [
+        ">= 115",
+        ">= 80 dan < 115",
+        ">= 60 dan < 80",
+        ">= 40 dan < 60",
+        "< 40"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tenis Meja",
+        "Kempo",
+        "Balap Sepeda",
+        "Paralayang",
+        "Billiard"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Wall Sit",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 75,
+      "sd": 20,
+      "rentang_acuan": [
+        ">= 115",
+        ">= 80 dan < 115",
+        ">= 60 dan < 80",
+        ">= 40 dan < 60",
+        "< 40"
+      ],
+      "sumber": "atletikNomor (norma khusus nomor Atletik)",
+      "dipakai": [
+        "Atletik - Lompat Tinggi",
+        "Atletik - 5000m & 3000m"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Zig Zag Run Test",
+      "kelompok": "Usia <= 17",
+      "jenis_kelamin": "Semua",
+      "mean": 12,
+      "sd": 2,
+      "rentang_acuan": [
+        "<= 8",
+        "> 8 dan <= 11,5",
+        "> 11,5 dan <= 13,5",
+        "> 13,5 dan <= 15,5",
+        "> 15,5"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tinju",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Zig Zag Run Test",
+      "kelompok": "Usia > 17",
+      "jenis_kelamin": "Semua",
+      "mean": 10,
+      "sd": 1.5,
+      "rentang_acuan": [
+        "<= 7",
+        "> 7 dan <= 9,63",
+        "> 9,63 dan <= 11,13",
+        "> 11,13 dan <= 12,63",
+        "> 12,63"
+      ],
+      "sumber": "caborData (norma bawaan per cabor)",
+      "dipakai": [
+        "Tinju",
+        "Pencak Silat",
+        "Tarung Derajat"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "% Performance",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Override Excel - persentase performa langsung dipakai bila tersedia"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Tinggi Badan",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Data antropometri - tidak dinilai"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "Berat Badan",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Data antropometri - tidak dinilai"
+      ],
+      "catatan": ""
+    },
+    {
+      "item": "IMT",
+      "kelompok": "-",
+      "jenis_kelamin": "-",
+      "mean": null,
+      "sd": null,
+      "rentang_acuan": [
+        "-",
+        "-",
+        "-",
+        "-",
+        "-"
+      ],
+      "sumber": "-",
+      "dipakai": [
+        "Dihitung otomatis: berat badan (kg) / tinggi badan (m)^2 - tidak dinilai"
+      ],
+      "catatan": ""
+    }
+  ],
+  "rumus": [
+    {
+      "no": 1,
+      "judul": "1. Skor z per item",
+      "rumus": "z = (nilai - mean) / sd",
+      "penjelasan": "Nilai mentah atlet dibandingkan dengan mean (rata-rata) dan sd (simpangan baku) norma kelompoknya: usia <= 17 memakai normaUnder17, usia > 17 memakai normaOver17.",
+      "contoh": "Push Up 1 Menit 34 kali, usia 16 (mean 25, sd 9) -> z = (34 - 25) / 9 = 1,00"
+    },
+    {
+      "no": 2,
+      "judul": "2. Konversi z ke persentase (item makin tinggi makin baik)",
+      "rumus": "z >= 3 -> 100 | 2 <= z < 3 -> 90 + (z-2)x10 | 1 <= z < 2 -> 75 + (z-1)x15 | 0 <= z < 1 -> 55 + zx20 | -1 <= z < 0 -> 35 + (z+1)x20 | -2 <= z < -1 -> 15 + (z+2)x20 | z < -2 -> maks(0, 5 + (z+3)x10)",
+      "penjelasan": "Nilai persentase dibatasi pada rentang 0-100. Rumus ini persis fungsi calcItemPct dengan higherIsBetter = true.",
+      "contoh": "z = 1,00 -> 75 + (1-1)x15 = 75%"
+    },
+    {
+      "no": 3,
+      "judul": "3. Konversi z ke persentase (item makin rendah makin baik)",
+      "rumus": "z <= -3 -> 100 | -3 < z <= -2 -> 90 + (-2-z)x10 | -2 < z <= -1 -> 75 + (-1-z)x15 | -1 < z <= 0 -> 55 + (-z)x20 | 0 < z <= 1 -> 35 + (1-z)x20 | 1 < z <= 2 -> 15 + (2-z)x20 | z > 2 -> maks(0, 5 + (3-z)x10)",
+      "penjelasan": "Dipakai untuk item waktu/jarak seperti Sprint, Illinois Agility, Zig Zag Run, Shuttle Run, dan Shoulder Mobility.",
+      "contoh": "Sprint 20 m 3,4 detik (mean 3,8, sd 0,4) -> z = -1,00 -> 75 + (-1-(-1))x15 = 75%"
+    },
+    {
+      "no": 4,
+      "judul": "4. Kategori dari persentase",
+      "rumus": ">= 90% Baik Sekali | >= 60% Baik | >= 40% Cukup | >= 20% Kurang | < 20% Kurang Sekali",
+      "penjelasan": "Dipakai untuk kategori per item maupun kategori performa akhir (fungsi getPctCategory). Ambang berasal dari konfigurasi pusat PCT_KATEGORI.",
+      "contoh": "Persentase 60% -> kategori Baik"
+    },
+    {
+      "no": 5,
+      "judul": "5. Rentang nilai per kategori (turunan dari mean & sd)",
+      "rumus": "Batas kategori terjadi pada z = 2, 0,25, -0,75, dan -1,75. Untuk item makin tinggi makin baik: Baik Sekali >= mean+2sd, Baik >= mean+0,25sd, Cukup >= mean-0,75sd, Kurang >= mean-1,75sd, Kurang Sekali < mean-1,75sd. Untuk item makin rendah makin baik, seluruh arah dibalik.",
+      "penjelasan": "Sistem tidak menyimpan tabel rentang nilai; kolom rentang pada tabel norma di halaman ini diturunkan dari mean & sd dengan breakpoint z dari konfigurasi pusat PCT_KATEGORI sehingga selalu konsisten dengan perhitungan.",
+      "contoh": "Push Up 1 Menit usia <= 17 (mean 25, sd 9) -> Baik Sekali >= 43, Baik >= 27,25, Cukup >= 18,25, Kurang >= 9,25, Kurang Sekali < 9,25"
+    },
+    {
+      "no": 6,
+      "judul": "6. Bleep Test -> VO2max",
+      "rumus": "maksShuttle = bawah(level x 0,4325 + 7,0048) | skor = level + shuttle / maksShuttle | VO2max = 3,46 x skor + 12,2 (ml/kg/min)",
+      "penjelasan": "Input ditulis sebagai level.shuttle (contoh 5.3 = level 5 shuttle 3). Nilai VO2max inilah yang kemudian dinilai dengan z-score terhadap norma Bleep Test.",
+      "contoh": "Level 5, shuttle 3 -> maksShuttle = 9 -> skor = 5 + 3/9 = 5,333 -> VO2max = 3,46 x 5,333 + 12,2 = 30,7 ml/kg/min"
+    },
+    {
+      "no": 7,
+      "judul": "7. Shoulder Mobility -> skor Brockport",
+      "rumus": "0 cm = 3 | <= 5 cm = 2,5 | <= 10 cm = 2 | <= 15 cm = 1,5 | <= 20 cm = 1 | <= 25 cm = 0,5 | > 25 cm = 0 | persentase = (skor / 3) x 100",
+      "penjelasan": "Jarak antar tangan makin kecil makin baik. Penilaian ini TIDAK memakai z-score, sehingga mean/sd Shoulder Mobility pada konfigurasi cabor tidak dipakai.",
+      "contoh": "Jarak 8 cm -> skor 2 -> persentase = (2/3)x100 = 66,7% -> Cukup"
+    },
+    {
+      "no": 8,
+      "judul": "8. RAST Test (daya rata-rata 6 sprint)",
+      "rumus": "P = berat badan (kg) x 35^2 / t^3 (t = waktu sprint dalam detik) | RAST Test = rata-rata P dari 6 sprint (watt)",
+      "penjelasan": "Daya tiap sprint dihitung dari berat badan dan waktu tempuh, lalu dirata-ratakan menjadi nilai RAST Test yang dinilai dengan z-score.",
+      "contoh": "Berat 70 kg, waktu sprint 5,0 detik -> P = 70 x 1225 / 125 = 686 watt"
+    },
+    {
+      "no": 9,
+      "judul": "9. RAST Fatigue Index",
+      "rumus": "FI = (daya maks - daya min) / total waktu 6 sprint",
+      "penjelasan": "Indeks kelelahan anaerob. Nilai ini tampil sebagai informasi saja dan TIDAK ikut dihitung ke performa (dilewati pada computeEvaluation).",
+      "contoh": "Daya maks 686 W, daya min 520 W, total waktu 32 detik -> FI = (686-520)/32 = 5,19"
+    },
+    {
+      "no": 10,
+      "judul": "10. Skor tetap bila norma tidak tersedia",
+      "rumus": "persentase = 50 (Kurang)",
+      "penjelasan": "Item yang tidak memiliki norma di caborData, atletikNomor, maupun NORMA_ITEM_KELAMIN diberi persentase tetap 50% agar tetap ikut dirata-ratakan.",
+      "contoh": "Item tambahan tanpa norma -> 50% -> Kurang"
+    },
+    {
+      "no": 11,
+      "judul": "11. Performa keseluruhan & kategori akhir",
+      "rumus": "performa = (jumlah seluruh persentase item yang dinilai) / (jumlah item x 100) x 100",
+      "penjelasan": "Persentase dibulatkan 1 desimal. Kategori akhir diambil dari persentase tersebut dengan ambang kategori butir 4. Item yang tidak dinilai (antropometri, override, RAST Fatigue Index) tidak ikut dirata-ratakan.",
+      "contoh": "2 item bernilai 75% dan 90% -> performa = (165 / 200) x 100 = 82,5% -> Baik"
+    },
+    {
+      "no": 12,
+      "judul": "12. IMT (Indeks Massa Tubuh)",
+      "rumus": "IMT = berat badan (kg) / (tinggi badan (m))^2",
+      "penjelasan": "Tinggi badan dalam cm dibagi 100 terlebih dahulu. Kategori IMT (standar WHO): < 18,5 Berat badan kurang; 18,5 - 24,9 Normal; 25,0 - 29,9 Berat badan berlebih; >= 30,0 Obesitas. IMT tidak dinilai z-score dan tidak ikut dirata-ratakan ke performa.",
+      "contoh": "Berat 70 kg, tinggi 170 cm -> 70 / (1,70 x 1,70) = 24,2 -> Normal"
+    }
+  ],
+  "keterangan": [
+    {
+      "no": 1,
+      "judul": "Sumber data norma",
+      "keterangan": "Seluruh nilai norma (mean & sd) dibaca langsung dari konfigurasi penilaian di index.html: caborData (20 cabor bawaan), atletikNomor (4 nomor Atletik), serta NORMA_ITEM_KELAMIN sebagai cadangan untuk 4 item berbasis kelamin. Sumber yang sama dipakai fungsi computeEvaluation saat menilai hasil tes atlet, sehingga halaman ini tidak pernah menyimpang dari logika penilaian."
+    },
+    {
+      "no": 2,
+      "judul": "Referensi eksternal",
+      "keterangan": "Di dalam kode sumber tidak tersimpan referensi eksternal maupun tabel norma dari pihak ketiga. Angka yang tampil adalah nilai konfigurasi sistem apa adanya. Untuk mengganti ke tabel norma resmi, cukup perbarui nilai di konfigurasi tersebut."
+    },
+    {
+      "no": 3,
+      "judul": "Turunan NORMA_ITEM_KELAMIN",
+      "keterangan": "Medicine Chest Pass 5 Kg (Laki-laki) = norma bawaan yang sudah dipakai 6 cabor (usia <= 17: 5,5 / 1,5; usia > 17: 7 / 1,8) - tidak diubah. Medicine Chest Pass 3 Kg (Perempuan) = norma Chest Pass 5 Kg + 1,0 m (bola 2 kg lebih ringan sehingga jarak rata-rata lebih jauh), sd tetap. Medicine Overhead Throw 5 kg (Laki-laki) = norma \"Medicine Overhead Throw\" bawaan Lempar Lembing (usia <= 17: 6 / 2; usia > 17: 8 / 2,5). Medicine Overhead Throw 3 Kg (Perempuan) = norma Overhead Throw + 1,0 m, sd tetap. Keempatnya lemparan jarak: makin jauh makin baik."
+    },
+    {
+      "no": 4,
+      "judul": "Rentang kategori",
+      "keterangan": "Sistem tidak menyimpan tabel rentang nilai per kategori. Rentang yang ditampilkan di halaman ini diturunkan dari mean & sd dengan breakpoint z = 2, 0,25, -0,75, dan -1,75 dari konfigurasi pusat PCT_KATEGORI, lalu dipetakan ke label pada fungsi getPctCategory."
+    },
+    {
+      "no": 5,
+      "judul": "Kategori penilaian",
+      "keterangan": "Baik Sekali (>= 90%), Baik (>= 60%), Cukup (>= 40%), Kurang (>= 20%), Kurang Sekali (< 20%). Label \"Cukup\" adalah label bawaan sistem (bukan \"Sedang\"). Seluruh ambang berasal dari konfigurasi pusat PCT_KATEGORI."
+    },
+    {
+      "no": 6,
+      "judul": "Item yang tidak dinilai",
+      "keterangan": "% Performance, Tinggi Badan, Berat Badan, dan IMT tidak dihitung dengan z-score (data antropometri / override Excel). RAST Fatigue Index tampil sebagai informasi dan tidak ikut dihitung ke performa."
+    },
+    {
+      "no": 7,
+      "judul": "Item berbasis jenis kelamin",
+      "keterangan": "Medicine Chest Pass 3 Kg dan Medicine Overhead Throw 3 Kg hanya untuk Perempuan; Medicine Chest Pass 5 Kg dan Medicine Overhead Throw 5 kg hanya untuk Laki-laki. Nilai pada item yang tidak sesuai jenis kelamin tetap tersimpan tetapi tidak ikut dihitung. Jenis kelamin kosong tidak ditebak."
+    },
+    {
+      "no": 8,
+      "judul": "Catatan cabor - Angkat Berat",
+      "keterangan": "Fokus pada kekuatan dan power. Sprint 20m diukur dalam detik (lebih rendah lebih baik). Shoulder Mobility: hasil semakin kecil/pendek jarak antar tangan semakin bagus."
+    },
+    {
+      "no": 9,
+      "judul": "Catatan cabor - Atletik",
+      "keterangan": "Data fallback untuk Atletik. Gunakan nomor perlombaan untuk tes spesifik."
+    },
+    {
+      "no": 10,
+      "judul": "Catatan cabor - Judo",
+      "keterangan": "Kombinasi kekuatan, daya tahan, dan kelincahan. RAST Test menggunakan kalkulator otomatis. Expanding Push dan Pull diukur terpisah."
+    },
+    {
+      "no": 11,
+      "judul": "Catatan cabor - Gulat",
+      "keterangan": "Tes keseimbangan (Stork Stand Kanan & Kiri) diukur dalam menit:detik. Illinois Agility mengukur kelincahan. Shoulder Mobility: hasil semakin kecil semakin bagus."
+    },
+    {
+      "no": 12,
+      "judul": "Catatan cabor - Sambo",
+      "keterangan": "Mirip dengan Gulat dan Judo. Hand Grip diukur dalam kg per tangan."
+    },
+    {
+      "no": 13,
+      "judul": "Catatan cabor - Tenis Meja",
+      "keterangan": "Fokus pada kekuatan genggaman dan keseimbangan. Hand Wall Toss Test diukur dalam kali."
+    },
+    {
+      "no": 14,
+      "judul": "Catatan cabor - Tinju",
+      "keterangan": "Power dan kelincahan sangat penting. Zig Zag Run diukur dalam detik."
+    },
+    {
+      "no": 15,
+      "judul": "Catatan cabor - Senam Gymnastic",
+      "keterangan": "Fokus pada kelenturan, keseimbangan, dan kekuatan tubuh bagian atas. Shoulder Mobility: hasil semakin kecil semakin bagus."
+    },
+    {
+      "no": 16,
+      "judul": "Catatan cabor - Angkat Besi",
+      "keterangan": "Kekuatan tubuh bagian atas dan core sangat dominan. 1RM Squat diukur dalam rasio berat badan. Shoulder Mobility: hasil semakin kecil semakin bagus."
+    },
+    {
+      "no": 17,
+      "judul": "Catatan cabor - IBC MMA",
+      "keterangan": "Cabor bela diri MMA. RAST Test menggunakan kalkulator otomatis."
+    },
+    {
+      "no": 18,
+      "judul": "Catatan cabor - Kempo",
+      "keterangan": "Plank diukur dalam detik. Shuttle Run mengukur kelincahan berubah arah."
+    },
+    {
+      "no": 19,
+      "judul": "Catatan cabor - Pencak Silat",
+      "keterangan": "3 Hop Jump berbeda dari 10 Hop Jump. Hand Grip diukur per tangan (kanan & kiri)."
+    },
+    {
+      "no": 20,
+      "judul": "Catatan cabor - Selam",
+      "keterangan": "Fokus pada kekuatan upper body dan fleksibilitas bahu. Shoulder Mobility: hasil semakin kecil semakin bagus."
+    },
+    {
+      "no": 21,
+      "judul": "Catatan cabor - Arung Jeram",
+      "keterangan": "Back Up 2 Menit diukur dalam jumlah kali. Kekuatan genggaman penting untuk dayung."
+    },
+    {
+      "no": 22,
+      "judul": "Catatan cabor - Balap Sepeda",
+      "keterangan": "Endurance dan power kaki diutamakan. Wall Sit diukur dalam detik."
+    },
+    {
+      "no": 23,
+      "judul": "Catatan cabor - Panahan",
+      "keterangan": "Kekuatan core dan keseimbangan sangat penting untuk menahan bow. Sprint 30m diukur dalam detik."
+    },
+    {
+      "no": 24,
+      "judul": "Catatan cabor - Paralayang",
+      "keterangan": "Fokus pada kekuatan upper body. Expanding Push dan Pull diukur terpisah."
+    },
+    {
+      "no": 25,
+      "judul": "Catatan cabor - Petanque",
+      "keterangan": "Kekuatan dan stabilitas tangan sangat penting untuk lemparan. Shoulder Mobility: hasil semakin kecil semakin bagus."
+    },
+    {
+      "no": 26,
+      "judul": "Catatan cabor - Tarung Derajat",
+      "keterangan": "Sit Up 2 Menit diukur dalam jumlah kali. RAST Test menggunakan kalkulator otomatis."
+    },
+    {
+      "no": 27,
+      "judul": "Catatan cabor - Billiard",
+      "keterangan": "Fokus pada kekuatan genggaman, core stability, dan daya tahan. Hand Grip diukur per tangan (kanan & kiri) dalam kg. Wall Sit diukur dalam menit:detik. Bleep Test dihitung otomatis menjadi VO2max."
+    }
+  ]
+}

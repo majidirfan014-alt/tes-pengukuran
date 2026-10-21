@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Pengukuran Cabang Olahraga</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css?v=20261021vjmeter">
+</head>
+<body class="min-h-screen">
+
+<!-- ==================== LANDING PAGE ==================== -->
+<div id="landingPage">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-800 to-indigo-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-y-2">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex shrink-0 items-center rounded-xl bg-white p-1.5"><img src="logo usc.jpeg" alt="Logo USC - Unesa Science Center" width="1600" height="725" loading="eager" class="block h-auto w-auto max-h-12 max-w-full object-contain"></span>
+                <div>
+                    <p class="font-black text-lg leading-tight">Tes Pengukuran</p>
+                    <p class="text-xs text-blue-200">Cabang Olahraga</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="#beranda" onclick="showSection('beranda')" class="nav-admin px-4 py-2 rounded-lg">Beranda</a>
+                <a href="#statistik" onclick="showSection('statistik')" class="nav-admin px-4 py-2 rounded-lg">Statistik</a>
+            </nav>
+            <div class="flex items-center gap-2 ml-auto md:ml-0">
+                <button onclick="openModal('modalLogin')" class="btn btn-primary">Login</button>
+                <button onclick="openModal('modalRegister')" class="btn btn-header-secondary">Daftar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="sec-beranda" class="landing-section bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-800 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-blue-200 text-sm uppercase tracking-widest mb-4">Sistem Evaluasi Tes Fisik</p>
+                    <h1 class="text-4xl lg:text-5xl font-black leading-tight mb-6">Sistem Tes Pengukuran Cabang Olahraga</h1>
+                    <div class="flex flex-wrap gap-3 mt-8">
+                        <button onclick="openModal('modalLogin')" class="btn bg-white text-blue-800 px-6 py-3 text-base font-bold">Login ke Sistem</button>
+                        <button onclick="showSection('statistik')" class="btn border-2 border-white/40 text-white px-6 py-3 text-base">Lihat Statistik</button>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur rounded-2xl p-6">
+                    <p class="text-blue-200 text-sm font-semibold mb-4">Ringkasan Live</p>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <p class="text-3xl font-black" id="heroAtlet">0</p>
+                            <p class="text-xs text-blue-200">Atlet Dites</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-black" id="heroCabor">0</p>
+                            <p class="text-xs text-blue-200">Total Cabor</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-black" id="heroSesi">0</p>
+                            <p class="text-xs text-blue-200">Sesi Tes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistik -->
+    <section id="sec-statistik" class="landing-section hidden py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-black mb-2">Statistik Evaluasi Tes Fisik</h2>
+            <p class="text-slate-500 mb-8">Data agregat tanpa identitas atlet</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="stat-card">
+                    <p class="stat-label">Atlet Dites</p>
+                    <p class="stat-value" id="statAtlet">0</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Total Cabor</p>
+                    <p class="stat-value" id="statCabor">0</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Sesi Tes</p>
+                    <p class="stat-value" id="statSesi">0</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><p class="font-bold">Jumlah Atlet Dites per Tanggal</p></div>
+                <div class="card-body"><canvas id="chartStatistik"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hasil Tes -->
+    <section id="sec-hasil" class="landing-section hidden py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-black mb-2">Hasil Tes Fisik</h2>
+            <p class="text-slate-500 mb-8">Ringkasan performa agregat</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="stat-card">
+                    <p class="stat-label">Rata-rata Performa</p>
+                    <p class="stat-value" id="statRataRata">0%</p>
+                </div>
+                <div class="card">
+                    <div class="card-header"><p class="font-bold">Distribusi Kategori Performa</p></div>
+                    <div class="card-body"><canvas id="chartDistribusi"></canvas></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daftar Cabor -->
+    <section id="sec-cabor" class="landing-section hidden py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-black mb-2">Daftar Cabor</h2>
+            <p class="text-slate-500 mb-6">Klik cabor untuk membuka hasil dengan kode akses</p>
+            <input id="searchCabor" oninput="renderPublicCabor()" class="form-input max-w-md mb-6" placeholder="Cari cabor...">
+            <div id="publicCaborList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2026 Tes Pengukuran Cabang Olahraga. Data agregat tanpa identitas atlet.</p>
+        </div>
+    </footer>
+</div>
+
+<!-- ==================== HASIL CBOR (READ-ONLY) ==================== -->
+<div id="caborView" class="hidden">
+    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button onclick="closeCaborView()" class="btn btn-header-secondary btn-sm">Kembali</button>
+                <div>
+                    <p class="font-bold" id="caborViewNama">-</p>
+                    <p class="text-xs text-slate-300">Read-only</p>
+                </div>
+            </div>
+            <button onclick="closeCaborView()" class="btn btn-header-secondary btn-sm">Kunci lagi</button>
+        </div>
+    </header>
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="stat-card"><p class="stat-label">Atlet Dites</p><p class="stat-value" id="cvAtlet">0</p></div>
+            <div class="stat-card"><p class="stat-label">Sesi Tes</p><p class="stat-value" id="cvSesi">0</p></div>
+            <div class="stat-card"><p class="stat-label">Item Tes</p><p class="stat-value" id="cvItem">0</p></div>
+            <div class="stat-card"><p class="stat-label">Status</p><p class="stat-value text-sm" id="cvStatus">Aktif</p></div>
+        </div>
+        <div class="card">
+            <div class="card-header flex flex-wrap gap-3 items-center">
+                <p class="font-bold">Daftar Atlet & Hasil Tes</p>
+                <input id="cvSearch" oninput="renderCaborViewTable()" class="form-input ml-auto max-w-xs" placeholder="Cari nama atlet...">
+            </div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama Atlet</th><th>Usia</th><th>Kelamin</th><th>Sesi Terakhir</th><th>Performa</th><th>Aksi</th></tr></thead>
+                    <tbody id="cvTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PANEL ADMIN ==================== -->
+<div id="adminPanel" class="hidden">
+    <header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
+            <div class="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center font-black">T</div>
+            <div class="flex-1">
+                <p class="font-bold text-sm">Tes Pengukuran Cabor</p>
+                <p class="text-xs text-slate-300" id="adminUserInfo">-</p>
+            </div>
+            <button onclick="logout()" class="btn btn-header-secondary btn-sm">Keluar</button>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 pb-2">
+            <div class="flex items-center gap-2">
+                <button id="btnKembali" onclick="navKembali()" class="btn btn-header-secondary btn-sm hidden">
+                    &larr; Kembali
+                </button>
+                <nav class="flex gap-1 overflow-x-auto pb-1 flex-1" id="adminNav">
+                <button data-view="atlet" onclick="showAdminView('atlet')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navAtlet">Daftar Atlet</button>
+                <button data-view="dashboard" onclick="showAdminView('dashboard')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navDashboard">Dashboard</button>
+                <button data-view="comparison" onclick="showAdminView('comparison')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navComparison">Data Comparison</button>
+                <button data-view="caboritem" onclick="showAdminView('caboritem')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navCaborItem">Cabor &amp; Item Tes</button>
+                <button data-view="akses" onclick="showAdminView('akses')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navAkses">Kode Akses</button>
+                <button data-view="norma" onclick="showAdminView('norma')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navNorma">Norma Tes</button>
+                <button data-view="rekomendasi" onclick="showAdminView('rekomendasi')" class="nav-admin px-3 py-2 rounded-lg text-xs" id="navRekomendasi">Rekomendasi</button>
+                <button data-view="hasil-publik" onclick="showAdminView('hasil-publik')" class="nav-admin px-3 py-2 rounded-lg text-xs hidden" id="navHasilPublik">Data Hasil Tes Fisik</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- VIEW: Daftar Atlet -->
+    <section id="view-atlet" class="admin-view max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <div class="flex flex-wrap items-center gap-3">
+            <h2 class="text-xl font-black">Daftar Atlet</h2>
+            <input id="searchAtlet" oninput="renderAtletList()" class="form-input ml-auto max-w-xs" placeholder="Cari atlet...">
+            <button onclick="openFormAtlet()" class="btn btn-primary">+ Tambah Atlet</button>
+            <button onclick="showAllAtlet()" class="btn btn-outline">Lihat Semua</button>
+            <button onclick="hapusSemuaAtletConfirm()" class="btn btn-danger btn-sm" id="btnHapusSemua">Hapus Semua</button>
+        </div>
+        <div class="card">
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama</th><th>Tempat/Tgl Lahir</th><th>Cabor</th><th>Usia</th><th>Kelamin</th><th>Jml Tes</th><th>Performa</th><th>Kategori</th><th>Aksi</th></tr></thead>
+                    <tbody id="atletTableBody"></tbody>
+                </table>
+                <p id="atletKosong" class="hidden text-center text-slate-400 py-8">Belum ada data atlet</p>
+            </div>
+        </div>
+
+        <!-- Form Tambah Atlet -->
+        <div id="formAtlet" class="hidden card">
+            <div class="card-header">                <p class="font-bold" id="formJudul">Form Tambah Atlet Baru</p></div>
+            <div class="card-body space-y-4">
+                <div class="flex gap-2">
+                    <button onclick="setFormMode('baru')" id="modeBaru" class="tab-btn active">Atlet Baru</button>
+                    <button onclick="setFormMode('lama')" id="modeLama" class="tab-btn">Atlet Sudah Pernah Tes</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div><label class="form-label">Nama Atlet *</label><input id="fNama" class="form-input" required></div>
+                    <div><label class="form-label">Tempat Lahir</label><input id="fTempat" class="form-input"></div>
+                    <div><label class="form-label">Tanggal Lahir *</label><input id="fLahir" type="date" class="form-input" onchange="updateUsia()"></div>
+                    <div><label class="form-label">Usia (otomatis)</label><input id="fUsia" class="form-input bg-slate-50" readonly></div>
+                    <div><label class="form-label">Jenis Kelamin *</label>
+                        <select id="fKelamin" class="form-input"><option value="">Pilih...</option><option>Laki-laki</option><option>Perempuan</option></select>
+                    </div>
+                    <div><label class="form-label">Cabang Olahraga *</label><select id="fCabor" class="form-input" onchange="updateItemTes()"></select></div>
+                    <div><label class="form-label">Nomor Perlombaan</label><input id="fNomor" class="form-input" placeholder="Kosongkan jika tidak ada"></div>
+                    <div><label class="form-label">Tanggal Tes *</label><input id="fTglTes" type="date" class="form-input"></div>
+                    <div><label class="form-label">Tinggi Badan (cm)</label><input id="fTinggi" type="number" step="0.1" min="50" max="250" class="form-input" placeholder="cth: 170" onchange="updateIMTDariForm()"></div>
+                    <div><label class="form-label">Berat Badan (kg)</label><input id="fBerat" type="number" step="0.1" min="10" max="300" class="form-input" placeholder="cth: 65" onchange="updateIMTDariForm()"></div>
+                    <div><label class="form-label">IMT (otomatis)</label><input id="fIMT" class="form-input bg-slate-50" readonly placeholder="otomatis"></div>
+                </div>
+
+                <!-- Kalkulator -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="kalkulator-box">
+                        <p class="font-bold text-sm mb-2">Kalkulator Bleep Test</p>
+                        <div class="flex gap-2 items-end">
+                            <div><label class="form-label">Level</label><select id="bleepLevel" class="form-input"></select></div>
+                            <div><label class="form-label">Shuttle</label><select id="bleepShuttle" class="form-input"></select></div>
+                            <button onclick="calcBleep()" class="btn btn-primary btn-sm">Hitung</button>
+                            <button onclick="applyBleep()" class="btn btn-success btn-sm">Terapkan</button>
+                        </div>
+                        <p class="mt-2 text-sm">VO2max: <span id="bleepResult" class="font-bold">-</span> ml/kg/min</p>
+                    </div>
+                    <div class="kalkulator-box">
+                        <p class="font-bold text-sm mb-2">Kalkulator RAST</p>
+                        <div class="flex gap-2 items-end">
+                            <div><label class="form-label">Berat (kg)</label><input id="rastWeight" type="number" step="0.1" class="form-input w-20"></div>
+                            <button onclick="openRastCalc()" class="btn btn-primary btn-sm">Input 6 Sprint</button>
+                        </div>
+                        <p class="mt-2 text-sm text-slate-500">Klik untuk mengisi waktu 6 sprint</p>
+                    </div>
+                </div>
+
+                <!-- Item Tes Dinamis -->
+                <div>
+                    <p class="font-bold text-sm mb-2">Formulir Tes Fisik</p>
+                    <div id="testFields" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div><label class="form-label">Catatan Tambahan</label><textarea id="fCatatan" class="form-input" rows="2"></textarea></div>
+                    <div><label class="form-label">Catatan Cedera/Kondisi Khusus</label><textarea id="fCedera" class="form-input" rows="2"></textarea></div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="simpanAtlet()" id="btnSimpanAtlet" class="btn btn-success">Simpan Atlet</button>
+                    <button onclick="resetFormAtlet()" class="btn btn-outline">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hasil Evaluasi -->
+        <div id="hasilEvaluasi" class="hidden card">
+            <div class="card-header flex items-center gap-3">
+                <p class="font-bold">Hasil Evaluasi</p>
+                <div class="ml-auto flex gap-2">
+                    <button onclick="printHasil()" class="btn btn-outline btn-sm">Cetak</button>
+                    <button onclick="exportCSVHasil()" class="btn btn-outline btn-sm">CSV</button>
+                    <button onclick="editSesiTerakhir()" class="btn btn-primary btn-sm">Edit</button>
+                    <button onclick="hapusSesiTerakhir()" class="btn btn-danger btn-sm">Hapus</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="chart-container"><canvas id="chartRadar"></canvas></div>
+                    <div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div class="stat-card"><p class="stat-label">Total Skor</p><p class="stat-value" id="evSkor">-</p></div>
+                            <div class="stat-card"><p class="stat-label">Performa</p><p class="stat-value" id="evPerforma">-</p></div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="stat-card"><p class="stat-label">IMT</p><p class="stat-value" id="evIMT">-</p><span class="imt-badge hidden" id="evIMTKat"></span><p class="imt-catatan hidden" id="evIMTCatatan"></p></div>
+                        </div>
+                        <div class="mb-4">
+                            <p class="form-label">Kategori</p>
+                            <span id="evKategori" class="cat-badge"></span>
+                        </div>
+                        <div class="table-scroll">
+                            <table class="data-table">
+                                <thead><tr><th>Item</th><th>Hasil</th><th>%</th><th>Kategori</th></tr></thead>
+                                <tbody id="evTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Dashboard -->
+    <section id="view-dashboard" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <h2 class="text-xl font-black">Dashboard Hasil Tes Fisik</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="stat-card"><p class="stat-label">Total Atlet</p><p class="stat-value" id="dashAtlet">0</p></div>
+            <div class="stat-card"><p class="stat-label">Total Cabor</p><p class="stat-value" id="dashCabor">0</p></div>
+            <div class="stat-card"><p class="stat-label">Rata-rata Performa</p><p class="stat-value" id="dashRata">0%</p></div>
+            <div class="stat-card"><p class="stat-label">Kategori Dominan</p><p class="stat-value text-sm" id="dashDominan">-</p></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Distribusi Kategori Performa</p></div>
+            <div class="card-body"><canvas id="chartDashDist"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="card-header flex flex-wrap gap-3 items-center">
+                <p class="font-bold">Data Hasil Tes Fisik Umum</p>
+                <select id="dashFilterCabor" onchange="renderDashboard()" class="form-input ml-auto max-w-xs"><option value="">Semua Cabor</option></select>
+                <select id="dashFilterKelamin" onchange="renderDashboard()" class="form-input max-w-xs">
+                    <option value="">Semua</option><option>Laki-laki</option><option>Perempuan</option>
+                </select>
+                <button onclick="exportCSVDashboard()" class="btn btn-outline btn-sm">Export CSV</button>
+            </div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama</th><th>Tempat/Tgl Lahir</th><th>Cabor</th><th>Usia</th><th>Kelamin</th><th>Jml Tes</th><th>Performa</th><th>Kategori</th><th>Aksi</th></tr></thead>
+                    <tbody id="dashTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Data Comparison -->
+    <section id="view-comparison" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <h2 class="text-xl font-black">Data Comparison</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <div><label class="form-label">Dari Tanggal</label><input id="cmpDari" type="date" class="form-input"></div>
+            <div><label class="form-label">Sampai Tanggal</label><input id="cmpSampai" type="date" class="form-input"></div>
+            <div><label class="form-label">Cabor</label><select id="cmpCabor" class="form-input"><option value="">Semua</option></select></div>
+            <div><label class="form-label">Nama Atlet</label><select id="cmpAtlet" class="form-input" onchange="renderComparison()"><option value="">Pilih Atlet</option></select></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="stat-card"><p class="stat-label">Sesi Sebelumnya</p><p class="stat-value" id="cmpSebelum">-</p></div>
+            <div class="stat-card"><p class="stat-label">Sesi Terbaru</p><p class="stat-value" id="cmpTerbaru">-</p></div>
+            <div class="stat-card"><p class="stat-label">Selisih</p><p class="stat-value" id="cmpSelisih">-</p></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Tren Seluruh Riwayat Tes</p></div>
+            <div class="card-body"><canvas id="chartTren"></canvas></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Riwayat & Selisih Skor</p></div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Tanggal Tes</th><th>Skor %</th><th>Kategori</th><th>Selisih</th></tr></thead>
+                    <tbody id="cmpTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Cabor & Item Tes -->
+    <section id="view-caboritem" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <h2 class="text-xl font-black">Cabor & Item Tes</h2>
+
+        <!-- Tambah Cabor -->
+        <div class="card" id="cardTambahCabor">
+            <div class="card-header"><p class="font-bold">Tambah Cabor Baru</p></div>
+            <div class="card-body flex flex-wrap gap-3 items-end">
+                <div><label class="form-label">Nama Cabor</label><input id="newCaborNama" class="form-input w-48"></div>
+                <div><label class="form-label">Kode Akses (opsional)</label>
+                    <div class="flex gap-1"><input id="newCaborKode" class="form-input w-36"><button onclick="genKode()" class="btn btn-outline btn-sm">Generate</button></div>
+                </div>
+                <button onclick="tambahCabor()" class="btn btn-primary">Tambah Cabor</button>
+            </div>
+        </div>
+
+        <!-- Daftar Cabor -->
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Daftar Cabor Terdaftar</p></div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama Cabor</th><th>Kabupaten</th><th>Kode Akses</th><th>Aksi</th></tr></thead>
+                    <tbody id="caborTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Master Item -->
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Master Item Tes Fisik</p></div>
+            <div class="card-body">
+                <div class="flex flex-wrap gap-3 items-end mb-4">
+                    <div><label class="form-label">Nama Item Tes</label><input id="newItemNama" class="form-input w-48"></div>
+                    <div><label class="form-label">Satuan</label><input id="newItemSatuan" class="form-input w-24"></div>
+                    <button onclick="tambahItem()" class="btn btn-primary">Tambah Item</button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold text-sm mb-2">Item Tambahan (diinput admin/user)</p>
+                        <div id="itemCustomList" class="space-y-1"></div>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-sm mb-2">Item Bawaan Sistem (43 item)</p>
+                        <div id="itemBawaanList" class="space-y-1 max-h-64 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pengaturan Item per Cabor -->
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Pengaturan Item Tes per Cabor</p></div>
+            <div class="card-body">
+                <div class="flex flex-wrap gap-3 items-end mb-4">
+                    <div><label class="form-label">Pilih Cabor</label><select id="settingCabor" class="form-input w-48" onchange="renderItemSetting()"></select></div>
+                    <input id="searchItemSetting" oninput="renderItemSetting()" class="form-input w-48" placeholder="Cari item...">
+                    <button onclick="pilihSemuaItem()" class="btn btn-outline btn-sm">Pilih Semua</button>
+                    <button onclick="lepasSemuaItem()" class="btn btn-outline btn-sm">Lepas Semua</button>
+                    <button onclick="simpanItemSetting()" class="btn btn-success">Simpan Pilihan Item</button>
+                </div>
+                <div id="itemSettingList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Kode Akses & Akun -->
+    <section id="view-akses" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <h2 class="text-xl font-black">Kode Akses Cabor & Akun User</h2>
+
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Kode Akses</p></div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama Cabor</th><th>Kode Akses</th><th>Status</th><th>Aksi</th></tr></thead>
+                    <tbody id="aksesTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><p class="font-bold">Akun User</p></div>
+            <div class="card-body">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                    <div><label class="form-label">Username</label><input id="usrUsername" class="form-input"></div>
+                    <div><label class="form-label">Password</label><input id="usrPassword" type="password" class="form-input"></div>
+                    <div><label class="form-label">Role</label>
+                        <select id="usrRole" class="form-input"><option value="cabor">Pelatih/User Cabor</option><option value="superadmin">Superadmin</option></select>
+                    </div>
+                    <div><label class="form-label">Cabor</label><select id="usrCabor" class="form-input"></select></div>
+                </div>
+                <button onclick="addUserFromForm()" class="btn btn-primary">Tambah Akun</button>
+                <div class="mt-4 table-scroll">
+                    <table class="data-table">
+                        <thead><tr><th>Username</th><th>Role</th><th>Cabor</th><th>Status</th><th>Aksi</th></tr></thead>
+                        <tbody id="userTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Norma Tes -->
+    <section id="view-norma" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <div class="rounded-2xl bg-gradient-to-r from-slate-800 to-slate-900 text-white p-6 flex flex-wrap items-center gap-4">
+            <div>
+                <p class="text-xs uppercase tracking-wide text-slate-300">Referensi Penilaian</p>
+                <h2 class="text-2xl font-black">Norma Tes Fisik</h2>
+                <p class="text-slate-300 text-sm">Norma, kategori, dan rumus penilaian yang dipakai sistem (read-only)</p>
+            </div>
+            <div class="ml-auto flex gap-2">
+                <button onclick="downloadNormaCSV()" class="btn btn-header-secondary">Download CSV</button>
+                <button onclick="downloadNormaXLSX()" class="btn btn-header-primary">Download Excel (.xlsx)</button>
+            </div>
+        </div>
+
+        <!-- Norma & Kategori -->
+        <div class="card">
+            <div class="card-header">
+                <p class="font-bold">Norma & Kategori</p>
+                <p class="text-xs text-slate-500">Rentang kategori diturunkan dari mean & sd (breakpoint z = 2, 0,25, −0,75, −1,75). Tabel 112 baris sesuai sheet Norma.</p>
+            </div>
+            <div class="card-body">
+                <select id="normaFilter" onchange="renderNormaTable()" class="form-input max-w-xs mb-3"><option value="">Semua Item Tes</option></select>
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead><tr>
+                            <th>Item Tes</th><th>Kelompok</th><th>Jenis Kelamin</th><th>Mean</th><th>SD</th>
+                            <th>Baik Sekali</th><th>Baik</th><th>Cukup</th><th>Kurang</th><th>Kurang Sekali</th>
+                            <th>Sumber Norma</th><th>Dipakai Oleh / Catatan</th>
+                        </tr></thead>
+                        <tbody id="normaTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-4 rounded-xl bg-blue-50 border border-blue-200">
+                    <p class="font-semibold text-sm text-blue-900 mb-1">Catatan Kategori IMT (standar WHO)</p>
+                    <p class="text-xs text-blue-800">&lt; 18,5 &rarr; Berat badan kurang &nbsp;|&nbsp; 18,5 &ndash; 24,9 &rarr; Normal &nbsp;|&nbsp; 25,0 &ndash; 29,9 &rarr; Berat badan berlebih &nbsp;|&nbsp; &ge; 30,0 &rarr; Obesitas</p>
+                    <p class="text-xs text-blue-700 mt-1">IMT dihitung otomatis dari berat badan (kg) / tinggi badan (m)&sup2; dan tidak dinilai z-score.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rumus -->
+        <div class="card">
+            <div class="card-header">
+                <p class="font-bold">Rumus Perhitungan</p>
+                <p class="text-xs text-slate-500">13 rumus penilaian lengkap dengan contoh perhitungan</p>
+            </div>
+            <div id="rumusKartuBox" class="card-body grid sm:grid-cols-2 gap-4"></div>
+        </div>
+
+        <!-- Keterangan -->
+        <div class="card">
+            <div class="card-header">
+                <p class="font-bold">Keterangan & Sumber Norma</p>
+                <p class="text-xs text-slate-500">Asal nilai norma, catatan teknis, dan keterangan per cabor</p>
+            </div>
+            <div class="card-body">
+                <div id="sumberMeta" class="mb-4 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm"></div>
+                <div id="keteranganList" class="space-y-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Data Hasil Tes Fisik (Tamu - Read Only) -->
+    <section id="view-hasil-publik" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <div class="rounded-2xl bg-gradient-to-r from-emerald-700 to-teal-800 text-white p-6">
+            <p class="text-xs uppercase tracking-wide text-emerald-200">Read Only</p>
+            <h2 class="text-2xl font-black">Data Hasil Tes Fisik</h2>
+            <p class="text-emerald-100 text-sm">Hasil evaluasi tes fisik atlet (tanpa data sensitif)</p>
+        </div>
+        <div class="card">
+            <div class="card-header flex flex-wrap gap-3 items-center">
+                <p class="font-bold">Daftar Hasil Tes</p>
+                <input id="pubSearch" oninput="renderHasilPublik()" class="form-input ml-auto max-w-xs" placeholder="Cari nama atlet...">
+                <select id="pubFilterCabor" onchange="renderHasilPublik()" class="form-input max-w-xs"><option value="">Semua Cabor</option></select>
+                <select id="pubFilterKat" onchange="renderHasilPublik()" class="form-input max-w-xs">
+                    <option value="">Semua Kategori</option>
+                    <option>Baik Sekali</option><option>Baik</option><option>Cukup</option><option>Kurang</option><option>Kurang Sekali</option>
+                </select>
+            </div>
+            <div class="card-body table-scroll">
+                <table class="data-table">
+                    <thead><tr><th>No</th><th>Nama</th><th>Cabor</th><th>Usia</th><th>Kelamin</th><th>Performa</th><th>Kategori</th><th>Detail</th></tr></thead>
+                    <tbody id="pubTableBody"></tbody>
+                </table>
+                <p id="pubKosong" class="hidden text-center text-slate-400 py-8">Belum ada data hasil tes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIEW: Rekomendasi -->
+    <section id="view-rekomendasi" class="admin-view hidden max-w-7xl mx-auto px-4 py-6 space-y-4">
+        <div class="rounded-2xl bg-gradient-to-r from-indigo-700 to-purple-800 text-white p-6">
+            <p class="text-xs uppercase tracking-wide text-indigo-200">Rekomendasi Latihan</p>
+            <h2 class="text-2xl font-black">Rekomendasi Latihan</h2>
+            <p class="text-indigo-100 text-sm">Saran latihan berdasarkan hasil tes fisik atlet</p>
+        </div>
+
+        <!-- Tab Navigation (superadmin only) -->
+        <div id="rekTabNav" class="flex gap-2 hidden">
+            <button onclick="switchRekTab('atlet')" id="rekTabAtlet" class="tab-btn active">Rekomendasi Atlet</button>
+            <button onclick="switchRekTab('template')" id="rekTabTemplate" class="tab-btn">Template Rekomendasi</button>
+        </div>
+
+        <!-- Tab: Rekomendasi Atlet -->
+        <div id="rekTabAtletContent" class="space-y-4">
+            <div class="card">
+                <div class="card-header flex flex-wrap gap-3 items-center">
+                    <p class="font-bold">Pilih Atlet</p>
+                    <input id="rekSearch" oninput="populateRekAtlet()" class="form-input ml-auto max-w-xs" placeholder="Cari nama...">
+                    <select id="rekFilterCabor" onchange="populateRekAtlet()" class="form-input max-w-xs"><option value="">Semua Cabor</option></select>
+                </div>
+                <div class="card-body">
+                    <select id="rekAtlet" onchange="renderRekomendasi()" class="form-input max-w-md">
+                        <option value="">-- Pilih Atlet --</option>
+                    </select>
+                </div>
+            </div>
+            <div id="rekHasil" class="space-y-4"></div>
+        </div>
+
+        <!-- Tab: Template Rekomendasi (superadmin only) -->
+        <div id="rekTabTemplateContent" class="space-y-4 hidden">
+            <div class="card">
+                <div class="card-header flex flex-wrap gap-3 items-center">
+                    <p class="font-bold">Template Rekomendasi</p>
+                    <button onclick="isiOtomatisTemplate()" class="btn btn-primary btn-sm">Isi Otomatis dari Template Jurnal</button>
+                    <button onclick="simpanTemplate()" class="btn btn-success btn-sm">Simpan Template</button>
+                    <span id="rekTemplateStatus" class="text-xs text-slate-500"></span>
+                </div>
+                <div class="card-body">
+                    <div class="flex flex-wrap gap-3 items-end mb-4">
+                        <div>
+                            <label class="form-label">Item Tes</label>
+                            <select id="rekTemplateItem" onchange="renderTemplateEditor()" class="form-input w-64"></select>
+                        </div>
+                        <div>
+                            <label class="form-label">Kategori</label>
+                            <select id="rekTemplateKategori" onchange="renderTemplateEditor()" class="form-input w-48"></select>
+                        </div>
+                        <div>
+                            <label class="form-label">Kelompok Usia</label>
+                            <select id="rekTemplateUsia" onchange="renderTemplateEditor()" class="form-input w-36">
+                                <option value="umum">Umum</option>
+                                <option value="u17">Usia ≤ 17</option>
+                                <option value="o17">Usia &gt; 17</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="rekTemplateEditor" class="space-y-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Login -->
+<div id="modalLogin" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
+        <h3 class="text-xl font-black mb-4">Login</h3>
+        <div class="space-y-3">
+            <div><label class="form-label">Username</label><input id="loginUsername" class="form-input"></div>
+            <div><label class="form-label">Password</label><input id="loginPassword" type="password" class="form-input"></div>
+            <p id="loginError" class="hidden text-red-600 text-sm"></p>
+            <button onclick="doLogin()" class="btn btn-primary w-full">Masuk</button>
+            <div class="flex justify-between text-sm">
+                <button onclick="closeModal('modalLogin');openModal('modalRegister')" class="text-blue-600">Belum punya akun? Daftar</button>
+                <button onclick="closeModal('modalLogin')" class="text-slate-500">Kembali ke Beranda</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Register -->
+<div id="modalRegister" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <h3 class="text-xl font-black mb-4">Daftar User Cabor</h3>
+        <div class="space-y-3">
+            <div><label class="form-label">Nama Cabor *</label><input id="regCabor" class="form-input" placeholder="cth: Pencak Silat"></div>
+            <div><label class="form-label">Nama Kabupaten/Kota *</label><input id="regKabupaten" class="form-input" placeholder="cth: Tuban"></div>
+            <div><label class="form-label">Username *</label><input id="regUsername" class="form-input" placeholder="huruf kecil/angka/underscore"></div>
+            <div><label class="form-label">Password *</label><input id="regPassword" type="password" class="form-input" placeholder="minimal 8 karakter"></div>
+            <p id="regError" class="hidden text-red-600 text-sm"></p>
+            <button onclick="doRegister()" class="btn btn-primary w-full">Daftar</button>
+            <button onclick="closeModal('modalRegister')" class="btn btn-outline w-full">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- RAST Modal -->
+<div id="modalRast" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-lg">
+        <h3 class="text-xl font-black mb-4">Kalkulator RAST (6 × 35m)</h3>
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead><tr><th>Sprint</th><th>Waktu (detik)</th><th>Power (W)</th></tr></thead>
+                <tbody id="rastRows"></tbody>
+            </table>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mt-4 text-sm">
+            <div><span class="text-slate-500">Peak Power:</span> <span id="rastPeak" class="font-bold">-</span></div>
+            <div><span class="text-slate-500">Min Power:</span> <span id="rastMin" class="font-bold">-</span></div>
+            <div><span class="text-slate-500">Avg Power:</span> <span id="rastAvg" class="font-bold">-</span></div>
+            <div><span class="text-slate-500">Fatigue Index:</span> <span id="rastFatigue" class="font-bold">-</span></div>
+        </div>
+        <div class="flex gap-2 mt-4">
+            <button onclick="applyRast()" class="btn btn-success">Terapkan ke Formulir</button>
+            <button onclick="closeModal('modalRast')" class="btn btn-outline">Batal</button>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Sesi Modal -->
+<div id="modalDetailSesi" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-black">Detail Hasil Tes</h3>
+            <button onclick="closeModal('modalDetailSesi')" class="btn btn-outline btn-sm">Tutup</button>
+        </div>
+        <div id="detailSesiContent"></div>
+    </div>
+</div>
+
+<script src="js/data.js?v=20261021rasttpe"></script>
+<script src="js/store.js?v=20261021rasttpe"></script>
+<script src="js/app.js?v=20261021rasttpe"></script>
+</body>
+</html>

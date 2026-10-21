@@ -1,0 +1,373 @@
+/* styles.css — Tes Pengukuran Cabang Olahraga */
+:root {
+    --cat-emerald: #059669;
+    --cat-blue: #2563eb;
+    --cat-amber: #d97706;
+    --cat-orange: #ea580c;
+    --cat-red: #dc2626;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* === KATEGORI BADGE === */
+.cat-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+.cat-emerald { background: #d1fae5; color: #065f46; }
+.cat-blue { background: #dbeafe; color: #1e40af; }
+.cat-amber { background: #fef3c7; color: #92400e; }
+.cat-orange { background: #ffedd5; color: #9a3412; }
+.cat-red { background: #fee2e2; color: #991b1b; }
+.cat-slate { background: #f1f5f9; color: #475569; }
+
+/* === NAV === */
+.nav-admin {
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 600;
+}
+.nav-admin:hover { background: rgba(255,255,255,0.15); }
+.nav-admin.active { background: rgba(255,255,255,0.25); }
+
+/* === CARD === */
+.card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+}
+.card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+.card-body { padding: 20px; }
+
+/* === TABLE === */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.data-table th {
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+.data-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top;
+}
+.data-table tr:hover { background: #f8fafc; }
+
+/* === FORM === */
+.form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+.form-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.15s;
+}
+.form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+/* === BUTTON === */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    white-space: nowrap;
+    line-height: 1.4;
+    text-decoration: none;
+}
+.btn-primary { background: #2563eb; color: white; }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-success { background: #059669; color: white; }
+.btn-success:hover { background: #047857; }
+.btn-danger { background: #dc2626; color: white; }
+.btn-danger:hover { background: #b91c1c; }
+.btn-outline {
+    background: white;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+.btn-outline:hover { background: #f1f5f9; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* === BUTTON ON DARK HEADER === */
+/* Primer: latar putih, teks navy gelap — kontras 15.9:1 (WCAG AAA) */
+.btn-header-primary {
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 600;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+.btn-header-primary:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+.btn-header-primary:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+.btn-header-primary:active {
+    background: #cbd5e1;
+    transform: scale(0.98);
+}
+
+/* Sekunder: latar transparan, teks putih + border putih — kontras 15.9:1 (WCAG AAA) */
+.btn-header-secondary {
+    background: transparent;
+    color: #ffffff;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.btn-header-secondary:hover {
+    background: rgba(255,255,255,0.15);
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.8);
+}
+.btn-header-secondary:focus-visible {
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+}
+.btn-header-secondary:active {
+    background: rgba(255,255,255,0.25);
+    transform: scale(0.98);
+}
+
+/* Disabled */
+.btn-header-primary:disabled,
+.btn-header-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+.btn-header-primary:disabled:hover { background: #ffffff; color: #0f172a; }
+.btn-header-secondary:disabled:hover { background: transparent; color: #ffffff; }
+
+/* === STAT CARD === */
+.stat-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    overflow: hidden;
+}
+.stat-card .stat-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 4px;
+    flex-shrink: 0;
+}
+.stat-card .stat-value {
+    font-size: clamp(1.1rem, 1.6vw + 0.4rem, 1.6rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.stat-card .stat-sub {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+/* Kartu IMT: badge kategori (netral) + keterangan kecil */
+.imt-badge {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    background: #e2e8f0;   /* slate-200 */
+    color: #0f172a;        /* slate-900 — kontras ~15:1 di atas slate-200 */
+}
+.imt-catatan {
+    font-size: 11px;
+    color: #475569;        /* slate-600 — kontras ~7.5:1 di atas putih */
+    line-height: 1.4;
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+.imt-pesan {
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+/* Grid ringkasan: kolom Atlet lebih lebar */
+.stat-grid-ringkas {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: 16px;
+}
+@media (max-width: 768px) {
+    .stat-grid-ringkas {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 390px) {
+    .stat-grid-ringkas {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Prioritas / Dipertahankan */
+.rek-summary-note {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* === SCROLLABLE TABLE === */
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.table-scroll table { min-width: 800px; }
+
+/* === KALKULATOR BOX === */
+.kalkulator-box {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+    .stat-card .stat-value { font-size: 22px; }
+    .card-body { padding: 12px; }
+    .data-table { font-size: 12px; }
+    .data-table th, .data-table td { padding: 6px 8px; }
+    .table-scroll table { min-width: 600px; }
+}
+
+/* === LOADING === */
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* === CHART CONTAINER === */
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* === RUMUS CARD === */
+.rumus-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    background: white;
+}
+.rumus-card .rumus-formula {
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    background: #f8fafc;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.rumus-card .rumus-contoh {
+    font-size: 12px;
+    color: #1d4ed8;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #eff6ff;
+    border-radius: 8px;
+}
+
+/* === TABS === */
+.tab-btn {
+    padding: 8px 16px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.15s;
+}
+.tab-btn:first-child { border-radius: 8px 0 0 8px; }
+.tab-btn:last-child { border-radius: 0 8px 8px 0; }
+.tab-btn.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+}
+
+/* === PRINT === */
+@media print {
+    .no-print { display: none !important; }
+    .card { border: none; box-shadow: none; }
+}

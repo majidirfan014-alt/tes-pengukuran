@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Preview Harness - Tes Pengukuran</title>
+<style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    iframe { border: 0; width: 100vw; height: 100vh; display: block; }
+    body.fixed iframe { width: var(--fw); margin: 0 auto; border-right: 1px solid #ccc; border-left: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<iframe id="app" src="about:blank"></iframe>
+<script>
+(function () {
+    var qs = new URLSearchParams(location.search);
+    var idx = parseInt(qs.get('a') || '0', 10);
+    var user = qs.get('u') || 'gresik';
+    var fw = qs.get('fw');
+    if (fw) {
+        document.body.classList.add('fixed');
+        document.documentElement.style.setProperty('--fw', fw + 'px');
+        document.body.style.background = '#888';
+    }
+
+    var isLanding = qs.get('page') === 'landing';
+
+    if (!isLanding) {
+    var cabors = ['Pencak Silat', 'Tarung Derajat', 'Senam Gymnastic'];
+    var names = [
+        'Chelsya Mikayla A',
+        'Muhammad Rizky Ramadhan Putra Pratama',
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw'
+    ];
+    var jenis = ['P', 'L', 'P'];
+
+    function hashPw(pw) {
+        var h = 0;
+        for (var i = 0; i < pw.length; i++) { h = ((h << 5) - h) + pw.charCodeAt(i); h |= 0; }
+        return h;
+    }
+
+    // Seed DB
+    var users = [
+        { id: 'u-sa', username: 'superadmin', password: hashPw('admin123'), role: 'superadmin', cabor: '', kabupaten: '', status: 'aktif', dibuat: '2026-01-01T00:00:00.000Z' },
+        { id: 'u-gs', username: 'gresik', password: hashPw('gresik123'), role: 'cabor', cabor: cabors[idx] || cabors[0], kabupaten: 'Tuban', status: 'aktif', dibuat: '2026-01-01T00:00:00.000Z' }
+    ];
+    var caborRows = cabors.map(function (n, i) {
+        // tanpa field items -> evalSesi pakai defaultItemsForCabor (butuh NORMA sudah load)
+        return { id: 'c-' + i, nama: n, kabupaten: 'Tuban', kode_akses: 'KODE' + i, kode_diubah: true, dibuat: '2026-01-01T00:00:00.000Z' };
+    });
+    var atlet = names.map(function (n, i) {
+        return {
+            id: 'a-' + i, nama: n, tempat_lahir: 'Tuban', tanggal_lahir: '2000-05-10',
+            jenis_kelamin: jenis[i], cabor_nama: cabors[i], nomor: '', catatan: '',
+            catatan_cedera: '', dibuat: '2026-01-01T00:00:00.000Z'
+        };
+    });
+    var tbMode = qs.get('tb') || 'sesi';       // sesi | none | comma | fallback
+    var perf = qs.get('perf');                  // mis. 42.1 (override % Performance)
+    var tglTes = qs.get('tgl') || '2026-10-18';
+    var bukaModal = qs.get('modal') === '1';
+
+    var nilai = {
+        'Sprint 20 m': 3.1, 'Vertical Jump': 0.45, 'Standing Broad Jump': 230,
+        'Hand Grip Kanan': 38, 'Pull Up 1 Menit': 18, 'Sit Up 1 Menit': 38,
+        'Plank': 95, 'Stork Stand Kanan': 42, 'Sit & Reach': 18
+    };
+    if (tbMode === 'sesi') {
+        nilai['Tinggi Badan'] = 162; nilai['Berat Badan'] = 54;
+    } else if (tbMode === 'comma') {
+        nilai['Tinggi Badan'] = '170,5'; nilai['Berat Badan'] = '70,5';
+    }
+    // tb=none / tb=fallback: TANPA TB/BB (seperti hasil simpanAtlet lama)
+    if (perf) nilai['% Performance'] = parseFloat(perf);
+
+    var rastMode = qs.get('rast');   // data | manual
+    var vjNilai = qs.get('vj');      // mis. 5.35
+    if (rastMode === 'data') {
+        nilai['RAST Data'] = { berat: 70, waktu: [5, 5, 5, 5, 5, 5] };
+    } else if (rastMode === 'manual') {
+        nilai['RAST Test'] = 2.64;
+    }
+    if (vjNilai) nilai['Vertical Jump'] = parseFloat(vjNilai);
+
+    // roda=1: reproduksi atlet pada screenshot (Sepatu Roda; RAST data lama tanpa data mentah)
+    if (qs.get('roda') === '1') {
+        atlet[0].cabor_nama = 'Sepatu Roda';
+        delete nilai['RAST Data'];
+        nilai['RAST Test'] = 2.64;
+        nilai['RAST Fatigue Index'] = 0.99;
+        nilai['Vertical Jump'] = 0.4;
+        nilai['Tinggi Badan'] = 170;
+        nilai['Berat Badan'] = 60;
+    }
+    // nobb=1: berat badan kosong — uji fallback Vertical Jump ke meter
+    if (qs.get('nobb') === '1') {
+        delete nilai['Berat Badan'];
+    }
+
+    var sesi = atlet.map(function (a, i) {
+        return { id: 's-' + i, atlet_id: a.id, tanggal_tes: tglTes, nomor: '', catatan: '',
+                 nilai: JSON.parse(JSON.stringify(nilai)), dibuat: tglTes + 'T00:00:00.000Z' };
+    });
+    if (tbMode === 'fallback') {
+        // Sesi lama (sebelum tanggal tes) yang PUNYA tinggi/berat
+        sesi.push({ id: 's-old', atlet_id: 'a-0', tanggal_tes: '2026-09-01', nomor: '', catatan: '',
+                    nilai: { 'Tinggi Badan': 170, 'Berat Badan': 70 }, dibuat: '2026-09-01T00:00:00.000Z' });
+    }
+
+    var db = { users: users, cabor: caborRows, atlet: atlet, sesi: sesi, itemCustom: [], aksesLog: [] };
+    localStorage.setItem('tes_pengukuran_db_v1', JSON.stringify(db));
+    localStorage.setItem('tes_pengukuran_session', JSON.stringify(
+        user === 'superadmin'
+            ? { id: 'u-sa', username: 'superadmin', role: 'superadmin', cabor: '', kabupaten: '' }
+            : { id: 'u-gs', username: 'gresik', role: 'cabor', cabor: cabors[idx] || cabors[0], kabupaten: 'Tuban' }
+    ));
+    localStorage.removeItem('tes_pengukuran_rekomendasi_template'); // pakai template default
+    } // end if (!isLanding)
+
+    var frame = document.getElementById('app');
+    function mulaiFrame() {
+        frame.src = isLanding ? '../index.html' : '../index.html#admin/rekomendasi';
+    }
+    // tplold=1: simulasikan cache template LAMA (tanpa ID baru) di localStorage
+    if (!isLanding && qs.get('tplold') === '1') {
+        fetch('../data/rekomendasi-template.json').then(function(r) { return r.json(); }).then(function(j) {
+            delete j.template.rast_avg_power;
+            delete j.template.rast_fatigue_index;
+            try { localStorage.setItem('rekomendasi_template_v1', JSON.stringify(j)); } catch (e) {}
+            mulaiFrame();
+        }).catch(function() { mulaiFrame(); });
+    } else {
+        mulaiFrame();
+    }
+
+    var tries = 0;
+    var iv = setInterval(function () {
+        tries++;
+        var f;
+        try { f = frame.contentWindow; } catch (e) { return; }
+        if (!f) return;
+        var ready = false;
+        try {
+            if (isLanding) {
+                ready = f.document && f.document.readyState === 'complete' &&
+                    f.document.getElementById('heroAtlet') && f.document.getElementById('sec-beranda');
+            } else {
+                ready = f.document && f.document.getElementById('rekAtlet') &&
+                    typeof f.NORMA_ITEMS !== 'undefined' && f.NORMA_ITEMS.length > 0 &&
+                    f.__REKOMENDASI_JSON && f.renderRekomendasi && !f.document.getElementById('adminPanel').classList.contains('hidden');
+            }
+        } catch (e) { return; }
+        if (ready) {
+            clearInterval(iv);
+            // Pastikan tampilan Rekomendasi (init bisa override ke default view);
+            // view=norma|... memilih tampilan lain (mis. screenshot Norma Tes)
+            if (!isLanding) { try { f.showAdminView(qs.get('view') || 'rekomendasi'); } catch (e) {} }
+            // vjq=1: filter Norma Tes ke Vertical Jump -> baris turunan Lewis tampil
+            if (!isLanding && qs.get('vjq') === '1') {
+                try {
+                    f.document.getElementById('normaFilter').value = 'Vertical Jump';
+                    f.renderNormaTable();
+                } catch (e) {}
+            }
+            var sel = isLanding ? null : f.document.getElementById('rekAtlet');
+            var target = 'a-' + idx;
+            var ada = false;
+            if (sel) {
+                for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === target) ada = true; }
+                if (ada) { sel.value = target; f.renderRekomendasi(); }
+            }
+            var titleJadi = 'READY';
+            if (bukaModal) {
+                try {
+                    f.showDetailSesi('s-' + idx);
+                    var evM = f.evalSesi(f.findSesi('s-' + idx));
+                    titleJadi = 'READY modal imt=' + evM.imt + ' kat="' + evM.imtKategori +
+                        '" catatan="' + evM.imtCatatan + '"';
+                    var rastAktif = rastMode || (qs.get('roda') === '1' ? 'manual' : null);
+                    if (rastAktif || vjNilai) {
+                        var cariIt = function(nama) {
+                            return evM.items.filter(function(x) { return x.name === nama; })[0] || null;
+                        };
+                        var itPeak = cariIt('RAST Peak Power');
+                        var itRpp = cariIt('RAST Relative Peak Power');
+                        var itAvg = cariIt('RAST Average Power');
+                        var itFI = cariIt('RAST Fatigue Index');
+                        var itVJ = cariIt('Vertical Jump (Power)');
+                        if (rastAktif) {
+                            titleJadi += ' peak=' + JSON.stringify(itPeak ? itPeak.hasilTeks : 'hilang') +
+                                ' rpp=' + JSON.stringify(itRpp ? itRpp.hasilTeks : 'hilang') +
+                                ' rppPct=' + (itRpp ? (itRpp.pct === null || itRpp.pct === undefined ? 'null' : itRpp.pct) : 'x') +
+                                ' rppKat=' + JSON.stringify(itRpp && itRpp.cat ? itRpp.cat.label : '-') +
+                                ' rppKet=' + JSON.stringify(itRpp && itRpp.hasilKeterangan ? itRpp.hasilKeterangan : '') +
+                                ' rppPesan=' + JSON.stringify(itRpp && itRpp.pctPesan ? itRpp.pctPesan : '') +
+                                ' avg=' + JSON.stringify(itAvg ? itAvg.hasilTeks : 'hilang') +
+                                ' avgPct=' + (itAvg ? (itAvg.pct === null || itAvg.pct === undefined ? 'null' : itAvg.pct) : 'x') +
+                                ' fi=' + JSON.stringify(itFI ? itFI.hasilTeks : 'hilang') +
+                                ' fiPct=' + (itFI ? (itFI.pct === null || itFI.pct === undefined ? 'null' : itFI.pct) : 'x') +
+                                ' fiKat=' + JSON.stringify(itFI && itFI.cat ? itFI.cat.label : '-') +
+                                ' fiIkut=' + (itFI ? itFI.ikutPerforma : 'x') +
+                                ' rastRows=' + evM.items.filter(function(x) { return x.name.indexOf('RAST') === 0; }).length;
+                        }
+                        if (vjNilai || qs.get('roda') === '1') {
+                            titleJadi += ' vjName=' + JSON.stringify(itVJ ? itVJ.name : 'hilang') +
+                                ' vjHasil=' + JSON.stringify(itVJ ? itVJ.hasilTeks : 'hilang') +
+                                ' vjKet=' + JSON.stringify(itVJ && itVJ.hasilKeterangan ? itVJ.hasilKeterangan : '') +
+                                ' vjPct=' + (itVJ ? (itVJ.tanpaNorma ? 'tanpa-norma' : itVJ.pct) : 'x') +
+                                ' vjKat=' + JSON.stringify(itVJ && itVJ.cat ? itVJ.cat.label : '-');
+                        }
+                        // Verifikasi tampilan DOM (bukan hanya objek ev)
+                        var rowOf = function(nama) {
+                            var trs = f.document.querySelectorAll('#detailSesiContent tbody tr');
+                            for (var iR = 0; iR < trs.length; iR++) {
+                                var c0 = trs[iR].cells[0];
+                                if (c0 && c0.textContent.trim() === nama) return trs[iR];
+                            }
+                            return null;
+                        };
+                        var infoRow = function(tr) {
+                            if (!tr) return 'row-tidak-ada';
+                            var s1 = tr.cells[1].querySelectorAll('span');
+                            var s2 = tr.cells[2].querySelectorAll('span');
+                            var titleOf = function(el) {
+                                return (el && el.getAttribute && el.getAttribute('title')) ? el.getAttribute('title') : '';
+                            };
+                            return JSON.stringify({
+                                hasil: (s1.length ? s1[0].textContent : tr.cells[1].textContent).trim(),
+                                ket: s1.length > 1 ? s1[s1.length - 1].textContent.trim() : '',
+                                pct: (s2.length ? s2[0].textContent : tr.cells[2].textContent).trim(),
+                                note: s2.length > 1 ? s2[s2.length - 1].textContent.trim() : '',
+                                kat: tr.cells[3].textContent.trim(),
+                                titleHasil: titleOf(s1[0]),
+                                titlePct: titleOf(s2[0])
+                            });
+                        };
+                        if (rastAktif) {
+                            // Baris Peak/Relative/Average disembunyikan dari tampilan hasil;
+                            // yang tampil hanya RAST Fatigue Index (domRastTampil diharapkan 1)
+                            var trsRast = f.document.querySelectorAll('#detailSesiContent tbody tr');
+                            var nRast = 0;
+                            for (var iR2 = 0; iR2 < trsRast.length; iR2++) {
+                                var cR = trsRast[iR2].cells[0];
+                                if (cR && cR.textContent.trim().indexOf('RAST') === 0) nRast++;
+                            }
+                            titleJadi += ' domRastTampil=' + nRast +
+                                ' domFI=' + infoRow(rowOf('RAST Fatigue Index'));
+                        }
+                        if (vjNilai || qs.get('roda') === '1') {
+                            titleJadi += ' domVJ=' + infoRow(rowOf('Vertical Jump (Power)'));
+                        }
+                        if (rastAktif) {
+                            var rekBox = f.document.getElementById('rekHasil');
+                            var rekTxt = rekBox ? rekBox.textContent : '';
+                            var dipTxt = '';
+                            var notes = f.document.querySelectorAll('#rekHasil .rek-summary-note');
+                            for (var iN = 0; iN < notes.length; iN++) {
+                                if (notes[iN].textContent.indexOf('Dipertahankan') === 0) dipTxt = notes[iN].textContent;
+                            }
+                            var priTxt = '';
+                            for (var iN2 = 0; iN2 < notes.length; iN2++) {
+                                if (notes[iN2].textContent.indexOf('Prioritas') === 0) priTxt = notes[iN2].textContent;
+                            }
+                            titleJadi += ' rekRpp=' + (rekTxt.indexOf('RAST Relative Peak Power') >= 0) +
+                                ' rekFI=' + (rekTxt.indexOf('RAST Fatigue Index') >= 0) +
+                                ' rekTplRpp=' + (/\[RAST (Avg Power|Test)/.test(rekTxt)) +
+                                ' rekTplFI=' + (rekTxt.indexOf('[RAST Fatigue Index') >= 0) +
+                                ' dipFI=' + (dipTxt.indexOf('RAST Fatigue Index') >= 0) +
+                                ' priVJ=' + (priTxt.indexOf('Vertical Jump') >= 0);
+                            var rekRows = f.document.querySelectorAll('#rekHasil tbody tr');
+                            for (var iRR = 0; iRR < rekRows.length; iRR++) {
+                                if (rekRows[iRR].cells[0] && rekRows[iRR].cells[0].textContent.trim() === 'RAST Relative Peak Power') {
+                                    titleJadi += ' rekRppCell=' + JSON.stringify(rekRows[iRR].cells[4].textContent.trim().slice(0, 140));
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                } catch (e) { titleJadi = 'MODAL-ERR ' + e.message; }
+            }
+            // Uji end-to-end: superadmin isi TB/BB di form asli -> simpan -> modal Detail Hasil Tes
+            if (qs.get('form') === '1') {
+                try {
+                    f.showAdminView('atlet'); // isi opsi cabor di form
+                    var d = f.document;
+                    var db0f = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var nA0f = db0f.atlet.length, nS0f = db0f.sesi.length;
+                    d.getElementById('fNama').value = 'Tes IMT E2E';
+                    d.getElementById('fKelamin').value = 'Perempuan';
+                    d.getElementById('fCabor').value = cabors[idx];
+                    d.getElementById('fLahir').value = '2016-01-01';   // usia 10 saat tes
+                    d.getElementById('fTglTes').value = '2026-10-10';
+                    d.getElementById('fTinggi').value = '170';
+                    d.getElementById('fBerat').value = '70';
+                    f.updateIMTDariForm();                              // preview fIMT di form
+                    f.simpanAtlet();                                    // simpan sesi + TB/BB
+                    var dbNow = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var sesiBaru = dbNow.sesi[dbNow.sesi.length - 1];
+                    f.showDetailSesi(sesiBaru.id);                      // buka modal "Detail Hasil Tes"
+                    titleJadi = 'READY form dA=' + (dbNow.atlet.length - nA0f) +
+                        ' dS=' + (dbNow.sesi.length - nS0f) +
+                        ' tb=' + (sesiBaru.nilai['Tinggi Badan'] || 'kosong');
+                } catch (e) { titleJadi = 'FORM-ERR ' + e.message; }
+            }
+            // Uji mode edit: sesi LAMA tanpa TB/BB -> Edit -> isi TB/BB -> simpan -> UPDATE, bukan duplikat
+            if (qs.get('edit') === '1') {
+                try {
+                    f.showAdminView('atlet');
+                    var db0 = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var nA0 = db0.atlet.length, nS0 = db0.sesi.length;
+                    var tgt = null, tgtS = null;
+                    for (var i2 = 0; i2 < db0.sesi.length; i2++) {
+                        var s2 = db0.sesi[i2];
+                        if (!s2.nilai || s2.nilai['Tinggi Badan'] === undefined) {
+                            var own = db0.atlet.filter(function(x) { return x.id === s2.atlet_id; })[0];
+                            if (own) { tgt = own; tgtS = s2; break; }
+                        }
+                    }
+                    if (!tgt) throw new Error('tidak ada sesi tanpa TB/BB untuk diuji');
+                    f.mulaiEditAtlet(tgt.id, tgtS.id);
+                    var d2 = f.document;
+                    d2.getElementById('fTinggi').value = '165';
+                    d2.getElementById('fBerat').value = '55';
+                    f.updateIMTDariForm();
+                    var judulEdit = d2.getElementById('formJudul').textContent;
+                    var btnEdit = d2.getElementById('btnSimpanAtlet').textContent;
+                    f.simpanAtlet();
+                    var db1 = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var sesiKini = f.evalSesiSaatIni;                   // sesi hasil update
+                    var evKini = f.evalSesi(sesiKini);
+                    f.showDetailSesi(sesiKini.id);                      // modal harus tampil IMT
+                    titleJadi = 'READY edit dA=' + (db1.atlet.length - nA0) +
+                        ' dS=' + (db1.sesi.length - nS0) +
+                        ' tb=' + (sesiKini.nilai['Tinggi Badan'] || 'kosong') +
+                        ' imt=' + (evKini && evKini.imt) +
+                        ' judul=' + judulEdit + ' | ' + btnEdit;
+                } catch (e) { titleJadi = 'EDIT-ERR ' + e.message; }
+            }
+            // formview=1: buka form Atlet (bukti label input tes, mis. Vertical Jump (m))
+            if (!isLanding && qs.get('formview') === '1') {
+                try {
+                    f.showAdminView('atlet');
+                    f.openFormAtlet();
+                    titleJadi = 'READY formview';
+                } catch (e) { titleJadi = 'FORMVIEW-ERR ' + e.message; }
+            }
+            // Verifikasi Norma Tes (dokumen iframe tidak ikut --dump-dom)
+            if (!isLanding && qs.get('view') === 'norma') {
+                try {
+                    var dN = f.document;
+                    var teksRumus = dN.getElementById('rumusKartuBox') ? dN.getElementById('rumusKartuBox').textContent : '';
+                    var mHdr = (dN.body.textContent.match(/\d+ rumus penilaian lengkap/) || [''])[0];
+                    var barisN = dN.querySelectorAll('#normaTableBody tr').length;
+                    var adaVJP = dN.getElementById('normaTableBody').textContent.indexOf('Vertical Jump Power') >= 0;
+                    var adaTuru = dN.getElementById('rumusKartuBox').textContent.indexOf('13. Power Vertical Jump') >= 0;
+                    var adaImt12 = dN.getElementById('rumusKartuBox').textContent.indexOf('12. IMT') >= 0;
+                    titleJadi += ' header=' + JSON.stringify(mHdr) +
+                        ' kartuRumus=' + dN.querySelectorAll('.rumus-card').length +
+                        ' rumusLewis=' + adaTuru + ' rumusIMT=' + adaImt12 +
+                        ' barisNorma=' + barisN + ' vjPowerRow=' + adaVJP;
+                    // Fungsional: jalankan downloadNormaCSV asli, tangkap isi blob-nya
+                    if (f.URL && f.URL.createObjectURL) {
+                        var asliCU = f.URL.createObjectURL, asliRU = f.URL.revokeObjectURL;
+                        var asliClick = f.HTMLAnchorElement.prototype.click;
+                        var tangkap = [];
+                        f.URL.createObjectURL = function(b) { tangkap.push(b); return asliCU.call(f.URL, b); };
+                        f.URL.revokeObjectURL = function() {};
+                        f.HTMLAnchorElement.prototype.click = function() {}; // cegah unduhan asli
+                        try { f.downloadNormaCSV(); } catch (e1) {}
+                        f.HTMLAnchorElement.prototype.click = asliClick;
+                        f.URL.createObjectURL = asliCU; f.URL.revokeObjectURL = asliRU;
+                        if (tangkap[0] && tangkap[0].text) {
+                            tangkap[0].text().then(function(txt) {
+                                var bl = txt.split('\n').length;
+                                document.title = document.title + ' csvBaris=' + bl +
+                                    ' csvLewis=' + (txt.indexOf('13. Power Vertical Jump') >= 0) +
+                                    ' csvVJPower=' + (txt.indexOf('Vertical Jump Power') >= 0) +
+                                    ' csvCadangan=' + (txt.indexOf('bukan norma resmi KONI') >= 0);
+                            }).catch(function(e2) { document.title = document.title + ' CSV-ERR ' + e2.message; });
+                        }
+                    }
+                } catch (e) { titleJadi += ' NORMA-ERR ' + e.message; }
+            }
+            document.title = titleJadi;
+            // Uji jebakan duplikat: form "Atlet Baru" diisi identitas atlet lama + TB/BB
+            //   dup=1 -> confirm OK -> rute ke mode edit (tanpa duplikat, sesi lama ter-update)
+            //   dup=0 -> confirm Batal -> tetap buat atlet baru
+            if (qs.get('dup') !== null) {
+                var mauOke = qs.get('dup') === '1';
+                try {
+                    f.showAdminView('atlet');
+                    f.openFormAtlet();                       // mode "baru" + isi opsi cabor
+                    f.confirm = function() { return mauOke; };
+                    var dd = f.document;
+                    var dbD0 = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var nAD0 = dbD0.atlet.length, nSD0 = dbD0.sesi.length;
+                    var lama = dbD0.atlet[0];                // Chelsya Mikayla A, lahir 2000-05-10
+                    dd.getElementById('fNama').value = lama.nama;
+                    dd.getElementById('fLahir').value = lama.tanggal_lahir;
+                    dd.getElementById('fKelamin').value = 'Perempuan';
+                    dd.getElementById('fCabor').value = lama.cabor_nama;
+                    dd.getElementById('fTglTes').value = '';  // kosong -> harus dipertahankan
+                    dd.getElementById('fTinggi').value = '165';
+                    dd.getElementById('fBerat').value = '55';
+                    f.simpanAtlet();
+                    var dbD1 = JSON.parse(localStorage.getItem('tes_pengukuran_db_v1'));
+                    var dAD = dbD1.atlet.length - nAD0, dSD = dbD1.sesi.length - nSD0;
+                    if (mauOke) {
+                        var sD = f.findSesi('s-0');
+                        var evD = f.evalSesi(sD);
+                        f.showDetailPublik(lama.id);          // jalur Data Hasil Tes -> modal
+                        titleJadi = 'READY dup dA=' + dAD + ' dS=' + dSD +
+                            ' tb=' + (sD.nilai['Tinggi Badan'] || 'kosong') +
+                            ' tgl=' + sD.tanggal_tes + ' imt=' + evD.imt;
+                    } else {
+                        titleJadi = 'READY dupcreate dA=' + dAD + ' dS=' + dSD +
+                            ' tb=' + (dbD1.sesi[dbD1.sesi.length - 1].nilai['Tinggi Badan'] || 'kosong');
+                    }
+                } catch (e) { titleJadi = 'DUP-ERR ' + e.message; }
+                document.title = titleJadi;
+            }
+        } else if (tries > 100) {
+            clearInterval(iv);
+            document.title = 'TIMEOUT';
+        }
+    }, 100);
+})();
+</script>
+</body>
+</html>
