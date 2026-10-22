@@ -78,7 +78,8 @@ check('mulaiEditAtlet menghitung ulang preview IMT', fMulai.indexOf('updateIMTDa
 check('mulaiEditAtlet menghitung ulang item tes & usia', fMulai.indexOf('updateItemTes();') >= 0 && fMulai.indexOf('updateUsia();') >= 0, true);
 
 var fEditSesi = isiFungsi('editSesiTerakhir');
-check('editSesiTerakhir: guard canWrite', fEditSesi.indexOf('if (!canWrite())') >= 0, true);
+check('editSesiTerakhir: guard tulis (scoped ke pemilik cabor)', fEditSesi.indexOf('if (!bolehTulisCabor(') >= 0, true);
+check('editSesiTerakhir: tidak pakai guard global canWrite', fEditSesi.indexOf('if (!canWrite())') < 0, true);
 check('editSesiTerakhir: membuka mode edit sesi tampil', fEditSesi.indexOf('mulaiEditAtlet(evalAtletSaatIni.id, evalSesiSaatIni.id);') >= 0, true);
 check('editSesiTerakhir: tidak lagi stub alert lama', fEditSesi.indexOf('Fitur edit: ubah data di form lalu simpan ulang') < 0, true);
 
@@ -167,14 +168,40 @@ check('backfill anak (140 cm/35 kg): imt = 17,9', evAnak.imt, 17.9);
 check('backfill anak: label kategori kosong', evAnak.imtKategori, '');
 check('backfill anak: catatan anak muncul', /belum diaktifkan/.test(evAnak.imtCatatan), true);
 
-// --- 4. Guard: role cabor/tamu tidak bisa backfill ---
-console.log('\n--- 4. Guard role cabor ---');
+// --- 4. Guard role cabor: tulis HANYA pada cabor miliknya sendiri ---
+console.log('\n--- 4. Guard role cabor (scoped ke cabor sendiri) ---');
+// 4a. Cabor LAIN (bukan pemilik data) -> tetap ditolak
+G.localStorage.setItem('tes_pengukuran_session', JSON.stringify(
+    { id: 'u2', username: 'gresik', role: 'cabor', cabor: 'Sepatu Roda', kabupaten: 'Gresik' }));
+check('cabor canWrite false', G.canWrite(), false);
+check('bolehTulisCabor cabor lain = false', G.bolehTulisCabor('Pencak Silat'), false);
+check('updateAtlet ditolak utk cabor lain', G.updateAtlet('a1', { nama: 'X' }).ok, false);
+check('updateSesi ditolak utk cabor lain', G.updateSesi('s1', { nilai: {} }).ok, false);
+check('data tidak berubah', G.findAtlet('a1').nama, 'Backfill Tes Diubah');
+check('memindahkan atlet ke cabor lain ditolak', (function() {
+    G.localStorage.setItem('tes_pengukuran_session', JSON.stringify(
+        { id: 'u2', username: 'gresik', role: 'cabor', cabor: 'Pencak Silat', kabupaten: 'Tuban' }));
+    return G.updateAtlet('a1', { cabor_nama: 'Sepatu Roda' }).ok;
+})(), false);
+
+// 4b. Pemilik data (cabor sama) -> BOLEH menulis (menu Daftar Atlet)
 G.localStorage.setItem('tes_pengukuran_session', JSON.stringify(
     { id: 'u2', username: 'gresik', role: 'cabor', cabor: 'Pencak Silat', kabupaten: 'Tuban' }));
-check('cabor canWrite false', G.canWrite(), false);
-check('updateAtlet ditolak utk cabor', G.updateAtlet('a1', { nama: 'X' }).ok, false);
-check('updateSesi ditolak utk cabor', G.updateSesi('s1', { nilai: {} }).ok, false);
-check('data tidak berubah', G.findAtlet('a1').nama, 'Backfill Tes Diubah');
+check('bolehTulisCabor cabor sendiri = true', G.bolehTulisCabor('Pencak Silat'), true);
+check('updateAtlet utk cabor sendiri diizinkan', G.updateAtlet('a1', { nama: 'Backfill Tes Diubah' }).ok, true);
+check('updateSesi utk cabor sendiri diizinkan', G.updateSesi('s1', {
+    tanggal_tes: '2026-10-18', nomor: '',
+    nilai: { 'Vertical Jump': 0.45, 'Tinggi Badan': 165, 'Berat Badan': 55 }
+}).ok, true);
+check('nilai setelah ditulis user cabor tetap valid', G.evalSesi(G.findSesi('s1')).imt, 20.2);
+check('user cabor tidak bisa hapus semua atlet', (function() {
+    G.hapusSemuaAtlet();
+    return G.loadDB().atlet.length > 0;
+})(), true);
+check('user cabor tidak bisa tambah cabor', G.addCabor('Cabor Baru').ok, false);
+check('user cabor tidak bisa hapus cabor', G.hapusCabor('c1').ok, false);
+check('user cabor tidak bisa ubah kode akses cabor', G.updateCabor('c1', { kode_akses: 'BONGKAR' }).ok, false);
+check('user cabor boleh ubah item cabornya sendiri', G.updateCabor('c1', { items: ['Vertical Jump'] }).ok, true);
 
 console.log('\n=== RINGKASAN: ' + pass + ' lulus, ' + fail + ' gagal ===');
 process.exit(fail > 0 ? 1 : 0);

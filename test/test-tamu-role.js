@@ -48,8 +48,8 @@ G.localStorage.setItem('tes_pengukuran_session', JSON.stringify({ id: 'c', usern
 check('cabor canWrite() = false (read-only)', G.canWrite(), false);
 check('cabor isTamu() = true (non-superadmin)', G.isTamu(), true);
 
-// --- 2. Write guards untuk tamu & cabor ---
-console.log('\n--- Write Guards (tamu & cabor) ---');
+// --- 2. Write guards untuk tamu (tanpa akses tulis) kecuali PENDAFTARAN ---
+console.log('\n--- Write Guards (tamu: read-only, kecuali daftar) ---');
 G.localStorage.setItem('tes_pengukuran_session', JSON.stringify({ id: 't', username: 'Tamu', role: 'tamu' }));
 
 var r1 = G.addAtlet({ nama: 'Test', jenis_kelamin: 'Laki-laki', cabor_nama: 'Test' });
@@ -64,10 +64,35 @@ var r5 = G.updateSesi('x', { nilai: {} });
 check('updateSesi ditolak', r5.ok, false);
 var r6 = G.updateCabor('x', { nama: 'y' });
 check('updateCabor ditolak', r6.ok, false);
-var r7 = G.register('Test', 'Test', 'user123', 'password123');
-check('register ditolak', r7.ok, false);
+var r7 = G.register('Test Cabor Baru', 'Test', 'user123', 'password123');
+check('register PUBLIK diizinkan tanpa login', r7.ok, true);
 var r8 = G.addItemCustom('Test', 'detik');
-check('addItemCustom ditolak', r8.ok, false);
+check('addItemCustom ditolak utk tamu', r8.ok, false);
+
+// --- 2b. Pendaftaran publik: role dipaksa 'cabor' di sisi penyimpanan ---
+console.log('\n--- Pendaftaran Publik (role dipaksa) ---');
+var dbDaftar = G.loadDB();
+var akunBaru = dbDaftar.users.filter(function(u) { return u.username === 'user123'; })[0];
+check('akun hasil daftar tersimpan', !!akunBaru, true);
+check('role hasil daftar = cabor', akunBaru ? akunBaru.role : null, 'cabor');
+check('password tidak plaintext', akunBaru ? String(akunBaru.password).indexOf('password123') < 0 : false, true);
+check('password tersimpan ter-hash', akunBaru ? String(akunBaru.password).indexOf('$sha256$') === 0 : false, true);
+check('cabor otomatis dibuat saat daftar',
+    dbDaftar.cabor.filter(function(c) { return c.nama === 'Test Cabor Baru'; }).length, 1);
+
+// Role superadmin dari klien DIABAIKAN (tidak percaya input klien)
+var r9 = G.register('Cabor Curang', 'Test', 'akunsuper', 'password123', 'superadmin');
+check('daftar dgn role superadmin tetap berhasil', r9.ok, true);
+var akunCurang = G.loadDB().users.filter(function(u) { return u.username === 'akunsuper'; })[0];
+check('role yang tersimpan tetap cabor', akunCurang ? akunCurang.role : null, 'cabor');
+
+// Validasi pendaftaran
+check('username duplikat -> Username sudah digunakan',
+    G.register('Test Cabor Baru', 'Test', 'user123', 'password123').error, 'Username sudah digunakan');
+check('password < 8 -> Password minimal 8 karakter',
+    G.register('Cabor Lain', 'Test', 'akunbarux', 'abc').error, 'Password minimal 8 karakter');
+check('field kosong -> Semua field wajib diisi',
+    G.register('', 'Test', 'akunbaruy', 'password123').error, 'Semua field wajib diisi');
 
 // --- 3. Write ops masih berfungsi untuk superadmin ---
 console.log('\n--- Write Guards (superadmin) ---');

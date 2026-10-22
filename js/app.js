@@ -59,9 +59,13 @@ function handleHashRoute() {
         return;
     }
     if (u.role !== 'superadmin') {
-        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
+        // User cabor: hanya Kode Akses Cabor, Norma Tes & Sinkron yang diblokir.
+        // Role lain (tamu): seluruh menu admin diblokir (read-only dari landing page).
+        var blokir = (u.role === 'cabor')
+            ? ['akses', 'norma', 'sinkron']
+            : ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(view) >= 0) {
-            location.hash = '#admin/hasil-publik';
+            location.hash = u.role === 'cabor' ? '#admin/atlet' : '#admin/hasil-publik';
             showPanel();
             return;
         }
@@ -226,33 +230,75 @@ function renderCaborViewTable() {
 function doLogin() {
     var u = document.getElementById('loginUsername').value;
     var p = document.getElementById('loginPassword').value;
-    var r = login(u, p);
+    var info = document.getElementById('loginInfo');
+    var r;
+    try {
+        r = login(u, p);
+    } catch (e) {
+        r = { ok: false, error: 'Koneksi gagal. Coba lagi.' };
+    }
     if (!r.ok) {
         var el = document.getElementById('loginError');
         el.textContent = r.error;
         el.classList.remove('hidden');
+        if (info) info.classList.add('hidden');
         return;
     }
+    if (info) info.classList.add('hidden');
     closeModal('modalLogin');
     showPanel();
 }
 
 function doRegister() {
-    var r = register(
-        document.getElementById('regCabor').value,
-        document.getElementById('regKabupaten').value,
-        document.getElementById('regUsername').value,
-        document.getElementById('regPassword').value
-    );
-    if (!r.ok) {
-        var el = document.getElementById('regError');
-        el.textContent = r.error;
-        el.classList.remove('hidden');
+    var errEl = document.getElementById('regError');
+    errEl.textContent = '';
+    errEl.classList.add('hidden');
+
+    var cabor = document.getElementById('regCabor').value;
+    var kabupaten = document.getElementById('regKabupaten').value;
+    var username = document.getElementById('regUsername').value;
+    var password = document.getElementById('regPassword').value;
+
+    var r;
+    try {
+        // Pendaftaran publik: tidak perlu login. Role selalu dipaksa 'cabor'
+        // di store.register() (field role klien tidak pernah dipercaya).
+        r = register(cabor, kabupaten, username, password);
+    } catch (e) {
+        errEl.textContent = 'Koneksi gagal atau penyimpanan data tidak tersedia. Coba lagi.';
+        errEl.classList.remove('hidden');
         return;
     }
+
+    if (!r.ok) {
+        errEl.textContent = r.error || 'Pendaftaran gagal. Coba lagi.';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    // Sukses: bersihkan form, tutup modal daftar, buka modal Login + pesan sukses
+    ['regCabor', 'regKabupaten', 'regUsername', 'regPassword'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.value = '';
+    });
     closeModal('modalRegister');
-    alert('Pendaftaran berhasil! Silakan login.');
     openModal('modalLogin');
+
+    var info = document.getElementById('loginInfo');
+    if (info) {
+        info.textContent = 'Pendaftaran berhasil! Akun "' + (r.username || username) + '" untuk cabor ' +
+            (r.cabor || cabor) + ' siap digunakan. Silakan login.';
+        info.classList.remove('hidden');
+    }
+    var loginErr = document.getElementById('loginError');
+    if (loginErr) {
+        loginErr.textContent = '';
+        loginErr.classList.add('hidden');
+    }
+    var lu = document.getElementById('loginUsername');
+    if (lu) lu.value = r.username || username;
+    var lp = document.getElementById('loginPassword');
+    if (lp) { lp.value = ''; lp.focus(); }
 }
 
 function logout() {
@@ -287,10 +333,13 @@ function showPanel() {
     var roleLabel = u.role === 'superadmin' ? 'Superadmin' : 'User Cabor';
     document.getElementById('adminUserInfo').textContent = (u.username || '') + ' — ' + roleLabel;
     var isAdmin = u.role === 'superadmin';
-    // Menu admin saja (superadmin)
-    document.getElementById('navAtlet').style.display = isAdmin ? '' : 'none';
-    document.getElementById('navDashboard').style.display = isAdmin ? '' : 'none';
-    document.getElementById('navCaborItem').style.display = isAdmin ? '' : 'none';
+    var isCabor = u.role === 'cabor';
+    // Menu yang boleh dilihat user cabor: Daftar Atlet, Dashboard, Cabor & Item Tes
+    var bolehMenuCabor = isAdmin || isCabor;
+    document.getElementById('navAtlet').style.display = bolehMenuCabor ? '' : 'none';
+    document.getElementById('navDashboard').style.display = bolehMenuCabor ? '' : 'none';
+    document.getElementById('navCaborItem').style.display = bolehMenuCabor ? '' : 'none';
+    // Khusus superadmin (tidak ditampilkan & tidak bisa ditulis user cabor)
     document.getElementById('navAkses').style.display = isAdmin ? '' : 'none';
     document.getElementById('navNorma').style.display = isAdmin ? '' : 'none';
     document.getElementById('navSinkron').style.display = isAdmin ? '' : 'none';
@@ -350,11 +399,15 @@ function showAdminView(name) {
         openModal('modalLogin');
         return;
     }
-    // Blokir non-superadmin dari menu admin
+    // Blokir menu khusus superadmin (dan menu admin untuk tamu)
     if (u.role !== 'superadmin') {
-        var blokir = ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
+        // User cabor: Kode Akses Cabor, Norma Tes & Sinkron tidak bisa dibuka.
+        // Role lain (tamu): seluruh menu admin diblokir.
+        var blokir = (u.role === 'cabor')
+            ? ['akses', 'norma', 'sinkron']
+            : ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(name) >= 0) {
-            showAdminView('hasil-publik');
+            showAdminView(u.role === 'cabor' ? 'atlet' : 'hasil-publik');
             return;
         }
     }
@@ -443,7 +496,9 @@ function hapusSemuaAtletConfirm() {
 }
 
 function hapusAtletConfirm(id) {
-    if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat menghapus data');
+    var a = findAtlet(id);
+    if (!a) return alert('Atlet tidak ditemukan');
+    if (!bolehTulisCabor(a.cabor_nama)) return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat menghapus data');
     if (!confirm('Hapus atlet ini beserta semua riwayat tes?')) return;
     hapusAtlet(id);
     renderAtletList();
@@ -486,9 +541,7 @@ function setFormMode(mode) {
 function renderCaborOptions() {
     var sel = document.getElementById('fCabor');
     if (!sel) return;
-    var u = currentUser();
-    var list = listCabor();
-    if (u && u.role === 'cabor') list = list.filter(function(c) { return c.nama === u.cabor; });
+    var list = listCaborScope();
     sel.innerHTML = '<option value="">Pilih Cabor...</option>' +
         list.map(function(c) { return '<option>' + escHtml(c.nama) + '</option>'; }).join('');
 }
@@ -590,13 +643,14 @@ function validasiDurasiInput(inp) {
 }
 
 function simpanAtlet() {
-    if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat menyimpan data');
     var nama = document.getElementById('fNama').value.trim();
     if (!nama) return alert('Nama atlet wajib diisi');
     var kelamin = document.getElementById('fKelamin').value;
     if (!kelamin) return alert('Jenis kelamin wajib diisi');
     var cabor = document.getElementById('fCabor').value;
     if (!cabor) return alert('Cabor wajib dipilih');
+    // Superadmin bebas; user cabor hanya untuk cabornya sendiri; tamu ditolak
+    if (!bolehTulisCabor(cabor)) return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat menulis data');
 
     // Cegah atlet duplikat: nama + lahir + cabor sama saat mode "baru"
     // → tawarkan perbarui atlet & sesi tes terakhir yang sudah ada.
@@ -709,15 +763,23 @@ function simpanAtlet() {
             sesi = findSesi(idS);
         } else {
             sesi = addSesi({ atlet_id: idA, tanggal_tes: tglTes, nomor: nomorTes, nilai: nilai });
+            if (!sesi) return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat menulis data');
         }
     } else {
         atlet = addAtlet(dataAtlet);
+        if (!atlet || atlet.ok === false) {
+            return alert((atlet && atlet.error) || 'Akses ditolak: hanya superadmin atau pemilik data yang dapat menulis data');
+        }
         sesi = addSesi({
             atlet_id: atlet.id,
             tanggal_tes: tglTes,
             nomor: nomorTes,
             nilai: nilai
         });
+        if (!sesi) {
+            hapusAtlet(atlet.id); // batalkan atlet setengah jadi
+            return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat menulis data');
+        }
     }
 
     idAtletEdit = null;
@@ -953,8 +1015,8 @@ function exportCSVHasil() {
 }
 
 function editSesiTerakhir() {
-    if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat mengubah data');
     if (!evalAtletSaatIni || !evalSesiSaatIni) return alert('Tidak ada sesi tes yang sedang ditampilkan');
+    if (!bolehTulisCabor(evalAtletSaatIni.cabor_nama)) return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat mengubah data');
     mulaiEditAtlet(evalAtletSaatIni.id, evalSesiSaatIni.id);
 }
 
@@ -973,10 +1035,10 @@ function renderDashboard() {
     if (fc) list = list.filter(function(a) { return a.cabor_nama === fc; });
     if (fk) list = list.filter(function(a) { return a.jenis_kelamin === fk; });
 
-    // Filter cabor options
+    // Filter cabor options (sesuai hak akses: user cabor hanya cabornya sendiri)
     var selC = document.getElementById('dashFilterCabor');
     if (selC && selC.options.length <= 1) {
-        listCabor().forEach(function(c) {
+        listCaborScope().forEach(function(c) {
             selC.innerHTML += '<option>' + escHtml(c.nama) + '</option>';
         });
     }
@@ -1006,7 +1068,7 @@ function renderDashboard() {
     });
     document.getElementById('dashTableBody').innerHTML = rows.join('');
     document.getElementById('dashAtlet').textContent = list.length;
-    document.getElementById('dashCabor').textContent = listCabor().length;
+    document.getElementById('dashCabor').textContent = listCaborScope().length;
     document.getElementById('dashRata').textContent = (cnt > 0 ? Math.round(totalPct / cnt * 10) / 10 : 0) + '%';
 
     var dominan = Object.keys(dist).reduce(function(a, b) { return dist[a] >= dist[b] ? a : b; }, 'Baik Sekali');
@@ -1051,7 +1113,7 @@ function renderComparison() {
     }
     var selC = document.getElementById('cmpCabor');
     if (selC && selC.options.length <= 1) {
-        listCabor().forEach(function(c) {
+        listCaborScope().forEach(function(c) {
             selC.innerHTML += '<option>' + escHtml(c.nama) + '</option>';
         });
     }
@@ -1122,10 +1184,9 @@ function renderComparison() {
 // CABOR & ITEM TES
 // =====================================================================
 function renderCaborItem() {
-    // Daftar cabor
+    // Daftar cabor (user cabor hanya melihat cabornya sendiri)
     var u = currentUser();
-    var list = listCabor();
-    if (u && u.role === 'cabor') list = list.filter(function(c) { return c.nama === u.cabor; });
+    var list = listCaborScope();
 
     document.getElementById('caborTableBody').innerHTML = list.map(function(c, i) {
         var kodeTampil = u && u.role === 'cabor' ? '••••••' : c.kode_akses;
@@ -1188,13 +1249,16 @@ function lepasSemuaItem() {
 }
 
 function simpanItemSetting() {
-    if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat menyimpan data');
     var caborId = document.getElementById('settingCabor').value;
+    var c = findCabor(caborId);
+    if (!c) return alert('Cabor tidak ditemukan');
+    if (!bolehTulisCabor(c.nama)) return alert('Akses ditolak: hanya superadmin atau pemilik data yang dapat menyimpan data');
     var items = [];
     document.querySelectorAll('#itemSettingList input[type=checkbox]:checked').forEach(function(cb) {
         items.push(cb.getAttribute('data-item'));
     });
-    updateCabor(caborId, { items: items });
+    var r = updateCabor(caborId, { items: items });
+    if (!r.ok) return alert(r.error || 'Gagal menyimpan pilihan item');
     alert('Pilihan item tersimpan (' + items.length + ' item)');
 }
 
@@ -1224,11 +1288,13 @@ function ubahKode(id) {
 }
 
 function tambahItem() {
-    if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat menulis data');
+    // Master item: superadmin & user cabor (PRD 5.4); tamu ditolak
+    if (!canWrite() && !isCaborUser()) return alert('Akses ditolak: hanya superadmin atau user cabor yang dapat menulis data');
     var nama = document.getElementById('newItemNama').value.trim();
     var satuan = document.getElementById('newItemSatuan').value.trim();
     if (!nama) return alert('Nama item wajib diisi');
-    addItemCustom(nama, satuan);
+    var r = addItemCustom(nama, satuan);
+    if (!r.ok) return alert(r.error || 'Gagal menambah item');
     document.getElementById('newItemNama').value = '';
     document.getElementById('newItemSatuan').value = '';
     renderCaborItem();
