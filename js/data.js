@@ -569,12 +569,14 @@ function computeEvaluation(a) {
                 pct: null, cat: null, ikutPerforma: false, hidden: true
             });
 
-            // 2) Relative Peak Power (W/kg) — dinilai (z khusus KONI / topendsports)
+            // 2) Relative Peak Power (W/kg) — tampil sebagai informasi (baris tersembunyi),
+            //    TIDAK dirata-ratakan ke performa: seluruh baris turunan RAST
+            //    (Peak, Relative Peak, Average, Fatigue Index) dikecualikan dari rumus 11.
             var sR = normaRast(getNorma('RAST Test', a.usia, kelamin, ownerNorma), a.cabor);
             var rowRPP = {
                 name: 'RAST Relative Peak Power', raw: rr.peakRel,
                 hasilTeks: rr.peakRel.toFixed(2) + ' W/kg',
-                ikutPerforma: true, pctDesimal1: true, hidden: true
+                ikutPerforma: false, pctDesimal1: true, hidden: true
             };
             if (sR) {
                 var higherR = (sR.arah !== null && sR.arah !== undefined) ? !!sR.arah : resolveArahGlobal('RAST Test');
@@ -607,7 +609,8 @@ function computeEvaluation(a) {
 
         // Data lama: angka tanpa data mentah 6 sprint -> tampil apa adanya;
         // sel persen/kategori meminta input ulang 6 waktu sprint (nilai lama
-        // tidak dihapus dan tidak di-z-kan)
+        // tidak dihapus dan tidak di-z-kan). Baris turunan RAST tidak
+        // dirata-ratakan ke performa (lihat keterangan baris Relative Peak di atas).
         items.push({
             name: 'RAST Peak Power', raw: null,
             hasilTeks: '-',
@@ -619,7 +622,7 @@ function computeEvaluation(a) {
             hasilTeks: isNaN(manual) ? 'Isi berat badan & 6 waktu sprint' : manual + ' (data lama)',
             hasilTitle: 'Data mentah 6 sprint tidak tersedia \u2014 nilai lama ditampilkan apa adanya',
             pct: null, cat: null, pctPesan: 'Input ulang 6 waktu sprint',
-            ikutPerforma: true, hidden: true
+            ikutPerforma: false, hidden: true
         });
         items.push({
             name: 'RAST Average Power', raw: null,

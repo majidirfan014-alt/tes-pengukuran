@@ -137,7 +137,7 @@ check('Peak Power tidak ikut performa', peakD.ikutPerforma, false);
 check('Relative Peak Power hasil 9,80 W/kg', rppD.hasilTeks, '9.80 W/kg');
 check('Relative Peak Power pct u17 = 81 (z norma khusus KONI)', rppD.pct, 81);
 check('Relative Peak Power kat = Baik', rppD.cat.label, 'Baik');
-check('Relative Peak Power ikut performa', rppD.ikutPerforma, true);
+check('Relative Peak Power TIDAK ikut performa (baris turunan RAST)', rppD.ikutPerforma, false);
 check('Relative Peak Power sumber norma JSON', rppD.sumberNorma, 'JSON');
 check('Average Power hasil 686,0 W', avgD.hasilTeks, '686.0 W');
 check('Average Power % = Average/Peak = 100', avgD.pct, 100);
@@ -155,10 +155,9 @@ check('baris Fatigue Index tetap tampil', !fiD.hidden, true);
 check('sel % RAST memakai 1 desimal (pctDesimal1)', [rppD.pctDesimal1, avgD.pctDesimal1, fiD.pctDesimal1].join(','), 'true,true,true');
 var pushSendiri = ev({ usia: 16, kelamin: 'Laki-laki', items: ['Push Up 1 Menit'], nilai: { 'Push Up 1 Menit': 30 }, cabor: 'Pencak Silat' });
 var pctPush = pushSendiri.items[0].pct;
-var performaHarap = G.bulat1((81 + pctPush) / 2);
-check('performa = rata2 (Relative Peak + Push Up), Peak/Avg/FI dikeluarkan', eD.performa, performaHarap);
+check('performa = pct Push Up saja (seluruh baris turunan RAST dikeluarkan)', eD.performa, pctPush);
 check('jumlah baris = 5 (push + 4 RAST)', eD.items.length, 5);
-check('jumlah item dinilai = 2', eD.jumlahItem, 2);
+check('jumlah item dinilai = 1 (hanya push; RAST tidak dirata-ratakan)', eD.jumlahItem, 1);
 
 // --- 6. RAST cabor TANPA norma khusus -> tabel topendsports ---
 console.log('\n--- RAST norma topendsports (cabor non-KONI) ---');
@@ -176,12 +175,11 @@ check('RPP kategori = Average (8 s.d. <11 W/kg)', rppN.cat.label, 'Average');
 check('RPP warna badge = amber', rppN.cat.color, 'amber');
 check('RPP keterangan sumber topendsports', rppN.hasilKeterangan, 'Norma: topendsports.com (Draper & Whyte, 1997)');
 check('RPP non-khusus tanpa flag cadangan', 'cadanganNorma' in rppN, false);
-check('RPP non-khusus tetap ikut performa', rppN.ikutPerforma, true);
+check('RPP non-khusus TIDAK ikut performa (baris turunan RAST)', rppN.ikutPerforma, false);
 check('FI = 0 (di bawah batas 8) -> pct 100', fiN.pct, 100);
 check('FI kategori = Excellent', fiN.cat.label, 'Excellent');
 check('FI keterangan sumber topendsports', fiN.hasilKeterangan, 'Norma: topendsports.com (Draper & Whyte, 1997)');
-var performaNHarap = G.bulat1((38 + pctPush) / 2);
-check('performa non-khusus = rata2 (38 + push), FI dikeluarkan', eN.performa, performaNHarap);
+check('performa non-khusus = pct push saja (RPP & FI dikeluarkan)', eN.performa, pctPush);
 
 // Batas interpolasi & kategori (tabel A & B topendsports)
 var T = G.RAST_NORMA_TOPENDSPORTS;
@@ -233,7 +231,7 @@ check('Relative Peak Power tampil (data lama)', rppL.hasilTeks, '2.64 (data lama
 check('data lama TIDAK dihitung z (pct null)', rppL.pct, null);
 check('data lama TIDAK punya kategori', rppL.cat, null);
 check('data lama -> pesan sel persen/kategori', rppL.pctPesan, 'Input ulang 6 waktu sprint');
-check('data lama tetap ada di baris (ikutPerforma true)', rppL.ikutPerforma, true);
+check('data lama tetap ada di baris (ikutPerforma false, tidak dirata-ratakan)', rppL.ikutPerforma, false);
 check('peringatan data lama tersedia', typeof rppL.hasilTitle === 'string' && rppL.hasilTitle.length > 0, true);
 check('Average Power (data lama) tanpa angka', avgL.hasilTeks, '-');
 check('FI tanpa data -> pesan', fiL.hasilTeks, 'Isi berat badan & 6 waktu sprint');
@@ -324,7 +322,7 @@ check('RPP 9,8 W/kg -> persentase 38', rp.pct, 38);
 check('RPP 9,8 W/kg -> kategori Average', rp.cat.label, 'Average');
 check('Average Power 735,0 W, sel 100%', [av.hasilTeks, av.pct].join('|'), '735.0 W|100');
 check('FI 0 -> Excellent, 100%', [f2.pct, f2.cat.label].join('|'), '100|Excellent');
-check('performa = pct RPP saja (jml 1)', eSpec.performa, 38);
+check('sesi RAST-saja: tidak ada item dirata-ratakan -> performa 0', [eSpec.performa, eSpec.jumlahItem].join('|'), '0|0');
 
 // --- 10. dipakai tersimpan di NORMA_INDEX + perilaku normaRast ---
 console.log('\n--- Field dipakai & normaRast ---');
@@ -444,6 +442,9 @@ check('tampilan hasil tanpa ev.items.map langsung untuk tabel/radar',
 check('performa mengecualikan ikutPerforma false', dataJs.indexOf('return it.ikutPerforma !== false;') >= 0, true);
 check('index.html versi cache baru', html.indexOf('?v=20261021vjmeter') >= 0, true);
 check('index.html script versi rasttpe', html.indexOf('app.js?v=20261021rasttpe') >= 0, true);
+check('index.html versi cache data.js (cache-bust performa)', html.indexOf('js/data.js?v=20261022performa') >= 0, true);
+check('data.js baris RAST Relative Peak Power tidak ikut performa',
+    dataJs.indexOf('ikutPerforma: false, pctDesimal1: true, hidden: true') >= 0, true);
 check('index.html memakai logo usc.jpeg penuh', html.indexOf('src="logo usc.jpeg"') >= 0 && html.indexOf('object-contain') >= 0, true);
 
 console.log('\n========================================');
