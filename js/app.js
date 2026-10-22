@@ -59,13 +59,15 @@ function handleHashRoute() {
         return;
     }
     if (u.role !== 'superadmin') {
-        // User cabor: hanya Kode Akses Cabor, Norma Tes & Sinkron yang diblokir.
+        // User cabor: hanya Dashboard, Data Comparison & Rekomendasi yang boleh dibuka.
+        // Daftar Atlet, Cabor & Item Tes, Kode Akses, Norma Tes & Sinkron diblokir
+        // (juga lewat URL/hash langsung) -> diarahkan ke Dashboard.
         // Role lain (tamu): seluruh menu admin diblokir (read-only dari landing page).
         var blokir = (u.role === 'cabor')
-            ? ['akses', 'norma', 'sinkron']
+            ? ['atlet', 'caboritem', 'akses', 'norma', 'sinkron']
             : ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(view) >= 0) {
-            location.hash = u.role === 'cabor' ? '#admin/atlet' : '#admin/hasil-publik';
+            location.hash = u.role === 'cabor' ? '#admin/dashboard' : '#admin/hasil-publik';
             showPanel();
             return;
         }
@@ -334,11 +336,13 @@ function showPanel() {
     document.getElementById('adminUserInfo').textContent = (u.username || '') + ' — ' + roleLabel;
     var isAdmin = u.role === 'superadmin';
     var isCabor = u.role === 'cabor';
-    // Menu yang boleh dilihat user cabor: Daftar Atlet, Dashboard, Cabor & Item Tes
-    var bolehMenuCabor = isAdmin || isCabor;
-    document.getElementById('navAtlet').style.display = bolehMenuCabor ? '' : 'none';
-    document.getElementById('navDashboard').style.display = bolehMenuCabor ? '' : 'none';
-    document.getElementById('navCaborItem').style.display = bolehMenuCabor ? '' : 'none';
+    // Menu navigasi per-role (conditional rendering, kodenya tidak dihapus):
+    // - Superadmin: semua menu
+    // - User cabor: hanya Dashboard, Data Comparison & Rekomendasi
+    //   (Daftar Atlet, Cabor & Item Tes, Kode Akses, Norma Tes, Sinkron disembunyikan)
+    document.getElementById('navAtlet').style.display = isAdmin ? '' : 'none';
+    document.getElementById('navDashboard').style.display = (isAdmin || isCabor) ? '' : 'none';
+    document.getElementById('navCaborItem').style.display = isAdmin ? '' : 'none';
     // Khusus superadmin (tidak ditampilkan & tidak bisa ditulis user cabor)
     document.getElementById('navAkses').style.display = isAdmin ? '' : 'none';
     document.getElementById('navNorma').style.display = isAdmin ? '' : 'none';
@@ -352,6 +356,9 @@ function showPanel() {
     // Default view
     if (isAdmin) {
         showAdminView('atlet');
+    } else if (isCabor) {
+        // User cabor: halaman pertama yang dibuka adalah Dashboard
+        showAdminView('dashboard');
     } else {
         showAdminView('hasil-publik');
     }
@@ -401,13 +408,15 @@ function showAdminView(name) {
     }
     // Blokir menu khusus superadmin (dan menu admin untuk tamu)
     if (u.role !== 'superadmin') {
-        // User cabor: Kode Akses Cabor, Norma Tes & Sinkron tidak bisa dibuka.
+        // User cabor: hanya Dashboard, Data Comparison & Rekomendasi.
+        // Daftar Atlet & Cabor/Item Tes (juga Kode Akses, Norma Tes, Sinkron)
+        // tidak bisa dibuka -> diarahkan ke Dashboard.
         // Role lain (tamu): seluruh menu admin diblokir.
         var blokir = (u.role === 'cabor')
-            ? ['akses', 'norma', 'sinkron']
+            ? ['atlet', 'caboritem', 'akses', 'norma', 'sinkron']
             : ['atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'];
         if (blokir.indexOf(name) >= 0) {
-            showAdminView(u.role === 'cabor' ? 'atlet' : 'hasil-publik');
+            showAdminView(u.role === 'cabor' ? 'dashboard' : 'hasil-publik');
             return;
         }
     }

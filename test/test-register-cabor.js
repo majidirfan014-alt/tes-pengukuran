@@ -226,13 +226,20 @@ check('doRegister menampilkan pesan sukses', appJs.indexOf('Pendaftaran berhasil
 check('doRegister punya penanganan koneksi gagal', appJs.indexOf('Koneksi gagal') >= 0, true);
 check('index.html punya pesan sukses login', html.indexOf('id="loginInfo"') >= 0, true);
 check('index.html punya pesan error daftar', html.indexOf('id="regError"') >= 0, true);
-check('menu Daftar Atlet/Dashboard/Cabor tampil utk user cabor',
-    appJs.indexOf('var bolehMenuCabor = isAdmin || isCabor;') >= 0, true);
+check('menu user cabor: Dashboard tampil, Daftar Atlet & Cabor disembunyikan',
+    appJs.indexOf("document.getElementById('navDashboard').style.display = (isAdmin || isCabor) ? '' : 'none';") >= 0 &&
+    appJs.indexOf("document.getElementById('navAtlet').style.display = isAdmin ? '' : 'none';") >= 0 &&
+    appJs.indexOf("document.getElementById('navCaborItem').style.display = isAdmin ? '' : 'none';") >= 0, true);
 check('menu Kode Akses & Norma khusus superadmin',
     appJs.indexOf("document.getElementById('navAkses').style.display = isAdmin ? '' : 'none';") >= 0 &&
     appJs.indexOf("document.getElementById('navNorma').style.display = isAdmin ? '' : 'none';") >= 0, true);
-check('menu diblokir utk user cabor = akses, norma, sinkron',
-    (appJs.match(/\['akses', 'norma', 'sinkron'\]/g) || []).length, 2);
+check('menu diblokir utk user cabor = atlet, caboritem, akses, norma, sinkron',
+    (appJs.match(/\['atlet', 'caboritem', 'akses', 'norma', 'sinkron'\]/g) || []).length, 2);
+check('akses atlet/caboritem utk user cabor diarahkan ke Dashboard',
+    appJs.indexOf("u.role === 'cabor' ? '#admin/dashboard' : '#admin/hasil-publik'") >= 0 &&
+    appJs.indexOf("showAdminView(u.role === 'cabor' ? 'dashboard' : 'hasil-publik')") >= 0, true);
+check('login user cabor langsung membuka Dashboard',
+    appJs.indexOf("} else if (isCabor) {\n        // User cabor: halaman pertama yang dibuka adalah Dashboard\n        showAdminView('dashboard');") >= 0, true);
 check('menu diblokir utk tamu tetap lengkap (2 tempat)',
     (appJs.match(/'atlet', 'dashboard', 'caboritem', 'akses', 'norma', 'sinkron'/g) || []).length, 2);
 check('sync data tetap khusus superadmin',
