@@ -49,7 +49,7 @@ check('sync: pesan bila SDK belum termuat', sync.indexOf('Firebase SDK belum ter
 check('index.html: SDK Firebase compat (app + firestore)',
     html.indexOf('firebase-app-compat.js') >= 0 && html.indexOf('firebase-firestore-compat.js') >= 0, true);
 check('index.html: muat firebase-config.js & sync.js bertanda versi',
-    html.indexOf('js/firebase-config.js?v=20261021firebase') >= 0 && html.indexOf('js/sync.js?v=20261021firebase') >= 0, true);
+    html.indexOf('js/firebase-config.js?v=20261021firebase') >= 0 && html.indexOf('js/sync.js?v=20261022migrasi') >= 0, true);
 check('index.html: nav & view Sinkron Data',
     html.indexOf('id="navSinkron"') >= 0 && html.indexOf('data-view="sinkron"') >= 0 && html.indexOf('id="view-sinkron"') >= 0, true);
 check('index.html: tombol backup & pulihkan + status',
@@ -65,7 +65,7 @@ check('preview: dukung parameter view (E2E)', preview.indexOf("qs.get('view') ||
 check('cdp: kumpulkan teks view-sinkron', cdp.indexOf('sinkronLines') >= 0, true);
 // Perubahan tugas sebelumnya tetap utuh
 check('regresi: app.js evItemsTampil tetap ada', appJs.indexOf('function evItemsTampil(') >= 0, true);
-check('regresi: index.html versi script rasttpe tetap', html.indexOf('app.js?v=20261021rasttpe') >= 0, true);
+check('regresi: index.html versi script terbaru', html.indexOf('app.js?v=20261022pesan') >= 0, true);
 
 // --- 2. Logika sinkron (vm + Firestore mock) ---
 console.log('\n--- Logika backup & pulihkan (mock Firestore) ---');

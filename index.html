@@ -680,8 +680,8 @@
     <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
         <h3 class="text-xl font-black mb-4">Login</h3>
         <div class="space-y-3">
-            <div><label class="form-label">Username</label><input id="loginUsername" class="form-input" autocomplete="username"></div>
-            <div><label class="form-label">Password</label><input id="loginPassword" type="password" class="form-input" autocomplete="current-password"></div>
+            <div><label class="form-label">Username</label><input id="loginUsername" class="form-input" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+            <div><label class="form-label">Password</label><input id="loginPassword" type="password" class="form-input" autocomplete="current-password" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
             <p id="loginInfo" class="hidden text-emerald-700 text-sm bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2"></p>
             <p id="loginError" class="hidden text-red-600 text-sm"></p>
             <button onclick="doLogin()" class="btn btn-primary w-full">Masuk</button>
@@ -700,8 +700,8 @@
         <div class="space-y-3">
             <div><label class="form-label">Nama Cabor *</label><input id="regCabor" class="form-input" maxlength="60" placeholder="cth: Pencak Silat"></div>
             <div><label class="form-label">Nama Kabupaten/Kota *</label><input id="regKabupaten" class="form-input" maxlength="60" placeholder="cth: Tuban"></div>
-            <div><label class="form-label">Username *</label><input id="regUsername" class="form-input" maxlength="30" autocomplete="username" placeholder="huruf kecil/angka/underscore"></div>
-            <div><label class="form-label">Password *</label><input id="regPassword" type="password" class="form-input" minlength="8" maxlength="72" autocomplete="new-password" placeholder="minimal 8 karakter"></div>
+            <div><label class="form-label">Username *</label><input id="regUsername" class="form-input" maxlength="30" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="huruf kecil/angka/underscore"></div>
+            <div><label class="form-label">Password *</label><input id="regPassword" type="password" class="form-input" minlength="8" maxlength="72" autocomplete="new-password" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="minimal 8 karakter"></div>
             <p id="regError" class="hidden text-red-600 text-sm"></p>
             <button onclick="doRegister()" class="btn btn-primary w-full">Daftar</button>
             <button onclick="closeModal('modalRegister')" class="btn btn-outline w-full">Batal</button>
@@ -744,11 +744,11 @@
 </div>
 
 <script src="js/data.js?v=20261022performa"></script>
-<script src="js/store.js?v=20261021rasttpe"></script>
-<script src="js/app.js?v=20261021rasttpe"></script>
+<script src="js/store.js?v=20261022pesan"></script>
+<script src="js/app.js?v=20261022pesan"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script src="js/firebase-config.js?v=20261021firebase"></script>
-<script src="js/sync.js?v=20261021firebase"></script>
+<script src="js/sync.js?v=20261022migrasi"></script>
 </body>
 </html>

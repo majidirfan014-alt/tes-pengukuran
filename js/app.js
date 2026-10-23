@@ -39,6 +39,9 @@ function initApp() {
     var u = currentUser();
     if (u) {
         showPanel();
+        // Sesi aktif: unggah akun + data miliknya ke server (dibatasi frekuensi)
+        // agar akun yang sudah ada di perangkat ini bisa dipakai di perangkat lain.
+        try { if (typeof cloudSinkronOtomatis === 'function') cloudSinkronOtomatis(); } catch (e) {}
     } else {
         document.getElementById('landingPage').classList.remove('hidden');
     }
@@ -233,22 +236,60 @@ function doLogin() {
     var u = document.getElementById('loginUsername').value;
     var p = document.getElementById('loginPassword').value;
     var info = document.getElementById('loginInfo');
+    var err = document.getElementById('loginError');
     var r;
     try {
         r = login(u, p);
     } catch (e) {
         r = { ok: false, error: 'Koneksi gagal. Coba lagi.' };
     }
-    if (!r.ok) {
-        var el = document.getElementById('loginError');
-        el.textContent = r.error;
-        el.classList.remove('hidden');
+    if (r.ok) {
         if (info) info.classList.add('hidden');
+        if (err) { err.textContent = ''; err.classList.add('hidden'); }
+        // Unggah akun + datanya ke server agar bisa dipakai di perangkat lain
+        try { if (typeof cloudUnggahAkun === 'function') cloudUnggahAkun(r.user); } catch (e) {}
+        closeModal('modalLogin');
+        showPanel();
+        return;
+    }
+    // Login lokal gagal -> coba akun di server (login lintas perangkat)
+    if (typeof cloudLogin !== 'function') {
+        if (info) info.classList.add('hidden');
+        if (err) { err.textContent = r.error; err.classList.remove('hidden'); }
         return;
     }
     if (info) info.classList.add('hidden');
-    closeModal('modalLogin');
-    showPanel();
+    if (err) { err.textContent = 'Mencoba akun di server...'; err.classList.remove('hidden'); }
+    var tampilkan = function(rc) {
+        if (rc && rc.ok) {
+            if (err) { err.textContent = ''; err.classList.add('hidden'); }
+            closeModal('modalLogin');
+            showPanel();
+            return;
+        }
+        var pesanAkhir = (rc && rc.error) || r.error;
+        // Akun ada di perangkat ini tapi password salah: pesan lokal lebih
+        // relevan daripada "Username tidak ditemukan" dari server.
+        if (r.error === 'Password salah' && pesanAkhir === 'Username tidak ditemukan') {
+            pesanAkhir = r.error;
+        }
+        if (err) { err.textContent = pesanAkhir; err.classList.remove('hidden'); }
+    };
+    try {
+        var janji = cloudLogin(u, p);
+        if (janji && typeof janji.then === 'function') {
+            janji.then(tampilkan).catch(function() {
+                if (err) {
+                    err.textContent = 'Gagal terhubung ke server. Periksa koneksi internet lalu coba lagi.';
+                    err.classList.remove('hidden');
+                }
+            });
+        } else {
+            tampilkan(r);
+        }
+    } catch (e) {
+        if (err) { err.textContent = r.error; err.classList.remove('hidden'); }
+    }
 }
 
 function doRegister() {
@@ -285,6 +326,16 @@ function doRegister() {
     });
     closeModal('modalRegister');
     openModal('modalLogin');
+
+    // Unggah akun baru ke server (tanpa menunggu) agar bisa dipakai langsung
+    // dari perangkat lain; gagal koneksi tidak menggagalkan pendaftaran.
+    try {
+        if (typeof cloudUnggahAkun === 'function') {
+            var uname = r.username || username;
+            var akun = loadDB().users.filter(function(x) { return x.username === uname; })[0];
+            if (akun) cloudUnggahAkun(akun);
+        }
+    } catch (e) {}
 
     var info = document.getElementById('loginInfo');
     if (info) {
@@ -1349,7 +1400,7 @@ function addUserFromForm() {
     if (!canWrite()) return alert('Akses ditolak: hanya superadmin yang dapat menulis data');
     if (!isAdmin()) return alert('Hanya Superadmin');
     var username = document.getElementById('usrUsername').value.trim().toLowerCase();
-    var password = document.getElementById('usrPassword').value;
+    var password = document.getElementById('usrPassword').value.trim();
     var role = document.getElementById('usrRole').value;
     var cabor = document.getElementById('usrCabor').value;
     if (!/^[a-z0-9_]{4,30}$/.test(username)) return alert('Username: huruf kecil/angka/underscore, 4-30 karakter');
@@ -1368,7 +1419,7 @@ function addUserFromForm() {
 }
 
 function resetPwUser(id) {
-    var pw = prompt('Password baru:');
+    var pw = (prompt('Password baru:') || '').trim();
     if (!pw || pw.length < 8) return alert('Password minimal 8 karakter');
     var db = loadDB();
     var u = db.users.filter(function(x) { return x.id === id; })[0];

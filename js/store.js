@@ -149,12 +149,40 @@ function currentUser() {
     } catch (e) { return null; }
 }
 
+// Password dicocokkan persis seperti yang diketik; bila gagal, dicoba lagi
+// versi tanpa spasi di ujung saja (keyboard/autofill HP sering menambahkan
+// spasi ekor). Isi password TIDAK pernah diubah selain spasi di ujung.
+function cocokPassword(pw, tersimpan) {
+    if (verifyPw(pw, tersimpan)) return true;
+    var rapi = String(pw === null || pw === undefined ? '' : pw).trim();
+    return rapi !== String(pw) && verifyPw(rapi, tersimpan);
+}
+
 function login(username, password) {
+    // Normalisasi input: username di-trim lalu huruf kecil sehingga
+    // case-insensitive dan tahan auto-kapitalisasi keyboard HP;
+    // password hanya dibuang spasi ujung (lihat cocokPassword).
+    username = String(username === null || username === undefined ? '' : username).toLowerCase().trim();
+    password = String(password === null || password === undefined ? '' : password);
     var db = loadDB();
     var u = db.users.filter(function(x) {
-        return x.username === username.toLowerCase().trim() && verifyPw(password, x.password) && x.status === 'aktif';
+        return String(x.username).toLowerCase() === username && cocokPassword(password, x.password) && x.status === 'aktif';
     })[0];
-    if (!u) return { ok: false, error: 'Username atau password salah' };
+    if (!u) {
+        // Pesan spesifik agar mudah ditelusuri (sesuai permintaan pemilik):
+        // "Username tidak ditemukan" / "Password salah". Akun non-aktif sengaja
+        // diperlakukan seperti tidak ada agar status akun tidak bocor.
+        var ada = db.users.filter(function(x) {
+            return String(x.username).toLowerCase() === username && x.status === 'aktif';
+        })[0];
+        var pesan = ada ? 'Password salah' : 'Username tidak ditemukan';
+        try {
+            if (ada) console.warn('[login] password salah untuk username "' + username + '"');
+            else console.warn('[login] username "' + username + '" tidak ditemukan di penyimpanan browser ini ' +
+                '(akun tersimpan per-perangkat; pindah perangkat butuh sinkronisasi server)');
+        } catch (e) {}
+        return { ok: false, error: pesan };
+    }
     localStorage.setItem('tes_pengukuran_session', JSON.stringify({
         id: u.id, username: u.username, role: u.role, cabor: u.cabor, kabupaten: u.kabupaten
     }));
@@ -210,7 +238,9 @@ function register(cabor, kabupaten, username, password, roleKlien) {
     cabor = (cabor || '').trim();
     kabupaten = (kabupaten || '').trim();
     username = (username || '').toLowerCase().trim();
-    password = password || '';
+    // Password: hanya spasi di ujung yang dibuang (konsisten dengan
+    // cocokPassword saat login); isi tidak diubah sama sekali.
+    password = String(password === null || password === undefined ? '' : password).trim();
 
     if (!cabor || !kabupaten || !username || !password) {
         return { ok: false, error: 'Semua field wajib diisi' };

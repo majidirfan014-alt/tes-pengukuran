@@ -134,6 +134,63 @@ check('akun hash lama tetap bisa login', G.login('akunlama', 'lawas123').ok, tru
 check('sesi terisi setelah login', !!G.currentUser(), true);
 
 // ------------------------------------------------------------------
+console.log('\n--- 5b. Normalisasi input login (lintas perangkat / keyboard HP) ---');
+tanpaSesi();
+check('username login di-trim + huruf kecil', G.login('  BULU_TK  ', 'rahasia123').ok, true);
+check('username kapital dari auto-kapitalisasi HP tetap masuk', G.login('Bulu_Tk', 'rahasia123').ok, true);
+check('password dengan spasi ekor (autofill HP) tetap masuk', G.login('bulu_tk', 'rahasia123   ').ok, true);
+check('isi password yang berubah tetap ditolak', G.login('bulu_tk', ' rahasia124').ok, false);
+check('pesan error spesifik: username tidak ditemukan',
+    G.login('user_tidak_ada', 'apapun').error, 'Username tidak ditemukan');
+check('pesan error spesifik: password salah',
+    G.login('bulu_tk', 'salah_total').error, 'Password salah');
+// Alasan kegagalan dicatat di console untuk debugging
+var warnLog = [];
+var warnAsli = console.warn;
+console.warn = function(m) { warnLog.push(String(m)); };
+G.login('user_tidak_ada', 'apapun');
+G.login('bulu_tk', 'salah_total');
+console.warn = warnAsli;
+check('console mencatat username tidak ditemukan',
+    warnLog.some(function(m) { return m.indexOf('[login] username') >= 0 && m.indexOf('tidak ditemukan') >= 0; }), true);
+check('console mencatat password salah (username ada)',
+    warnLog.some(function(m) { return m.indexOf('[login] password salah') >= 0; }), true);
+
+// Pendaftaran: username dipangkas+lowercase, password hanya spasi ujung
+segarkanRate();
+var dSpasi = G.register('Sepatu Roda', 'Tuban', '  Spasi_User  ', '  rahasia1  ');
+check('daftar username dipangkas + lowercase', dSpasi.ok && dSpasi.username, 'spasi_user');
+check('login daftar spasi: tanpa spasi ekor', G.login('spasi_user', 'rahasia1').ok, true);
+check('login daftar spasi: dengan spasi ekor', G.login('spasi_user', '  rahasia1  ').ok, true);
+check('password tersimpan hash (bukan plaintext berspasi)',
+    (function() {
+        var u = G.loadDB().users.filter(function(x) { return x.username === 'spasi_user'; })[0];
+        return String(u.password).indexOf('$sha256$v1$1000$') === 0 && String(u.password).indexOf('rahasia1') < 0;
+    })(), true);
+tanpaSesi();
+
+// ------------------------------------------------------------------
+console.log('\n--- 5c. Atribut input anti auto-kapitalisasi (index.html) ---');
+function tagInput(id) {
+    var m = html.match(new RegExp('<input[^>]*id="' + id + '"[^>]*>'));
+    return m ? m[0] : '';
+}
+function punyaAtribut(id, daftar) {
+    var tag = tagInput(id);
+    return daftar.every(function(a) { return tag.indexOf(a) >= 0; });
+}
+check('input login username: autocomplete + anti auto-kapital/autocorrect/spellcheck',
+    punyaAtribut('loginUsername', ['autocomplete="username"', 'autocapitalize="none"', 'autocorrect="off"', 'spellcheck="false"']), true);
+check('input login password: autocomplete current-password + anti auto-kapital',
+    punyaAtribut('loginPassword', ['autocomplete="current-password"', 'autocapitalize="none"', 'autocorrect="off"', 'spellcheck="false"']), true);
+check('input daftar username: autocomplete + anti auto-kapital/autocorrect/spellcheck',
+    punyaAtribut('regUsername', ['autocomplete="username"', 'autocapitalize="none"', 'autocorrect="off"', 'spellcheck="false"']), true);
+check('input daftar password: autocomplete new-password + anti auto-kapital',
+    punyaAtribut('regPassword', ['autocomplete="new-password"', 'autocapitalize="none"', 'autocorrect="off"', 'spellcheck="false"']), true);
+check('index.html versi cache store.js (perbaikan login)',
+    html.indexOf('js/store.js?v=20261022pesan') >= 0, true);
+
+// ------------------------------------------------------------------
 console.log('\n--- 6. Pengunjung TANPA login: semua tulis ditolak ---');
 tanpaSesi();
 check('addAtlet ditolak', G.addAtlet({ nama: 'X', cabor_nama: 'Renang' }).ok, false);
