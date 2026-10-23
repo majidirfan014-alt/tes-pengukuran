@@ -65,7 +65,7 @@ check('preview: dukung parameter view (E2E)', preview.indexOf("qs.get('view') ||
 check('cdp: kumpulkan teks view-sinkron', cdp.indexOf('sinkronLines') >= 0, true);
 // Perubahan tugas sebelumnya tetap utuh
 check('regresi: app.js evItemsTampil tetap ada', appJs.indexOf('function evItemsTampil(') >= 0, true);
-check('regresi: index.html versi script terbaru', html.indexOf('app.js?v=20261022pesan') >= 0, true);
+check('regresi: index.html versi script terbaru', html.indexOf('app.js?v=20261022rekhide') >= 0, true);
 
 // --- 2. Logika sinkron (vm + Firestore mock) ---
 console.log('\n--- Logika backup & pulihkan (mock Firestore) ---');

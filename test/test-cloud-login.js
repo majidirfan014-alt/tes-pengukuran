@@ -287,7 +287,7 @@ function dbLaptop(hashSepatu) {
         kodeStore.indexOf("'Password salah'") >= 0, true);
     check('app.js memprioritaskan "Password salah" lokal di atas "Username tidak ditemukan" server',
         appJs.indexOf("if (r.error === 'Password salah' && pesanAkhir === 'Username tidak ditemukan')") >= 0, true);
-    check('index.html versi app.js', html.indexOf('js/app.js?v=20261022pesan') >= 0, true);
+    check('index.html versi app.js', html.indexOf('js/app.js?v=20261022rekhide') >= 0, true);
     check('index.html versi sync.js', html.indexOf('js/sync.js?v=20261022migrasi') >= 0, true);
     check('index.html versi store.js', html.indexOf('js/store.js?v=20261022pesan') >= 0, true);
     check('input login & daftar sudah anti auto-kapitalisasi HP',

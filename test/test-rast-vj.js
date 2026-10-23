@@ -441,7 +441,7 @@ check('tampilan hasil tanpa ev.items.map langsung untuk tabel/radar',
     (appJs.match(/evItemsTampil\(ev\)\.map/g) || []).length >= 4, true);
 check('performa mengecualikan ikutPerforma false', dataJs.indexOf('return it.ikutPerforma !== false;') >= 0, true);
 check('index.html versi cache baru', html.indexOf('?v=20261021vjmeter') >= 0, true);
-check('index.html script versi terbaru (20261022pesan)', html.indexOf('app.js?v=20261022pesan') >= 0, true);
+check('index.html script versi terbaru (20261022rekhide)', html.indexOf('app.js?v=20261022rekhide') >= 0, true);
 check('index.html versi cache data.js (cache-bust performa)', html.indexOf('js/data.js?v=20261022performa') >= 0, true);
 check('data.js baris RAST Relative Peak Power tidak ikut performa',
     dataJs.indexOf('ikutPerforma: false, pctDesimal1: true, hidden: true') >= 0, true);

@@ -2090,8 +2090,16 @@ function renderRekomendasi() {
     var urutanKat = { 'Kurang Sekali': 0, 'Kurang': 1, 'Cukup': 2, 'Baik': 3, 'Baik Sekali': 4 };
     var kategoriIndo = ['Kurang Sekali', 'Kurang', 'Cukup', 'Baik', 'Baik Sekali'];
 
-    // Susun item dengan rekomendasi
-    var itemsDenganRekom = ev.items.map(function(it) {
+    // Susun item dengan rekomendasi.
+    // Baris turunan RAST (Peak / Relative Peak / Average Power, flag hidden)
+    // disembunyikan di halaman Rekomendasi untuk User Cabor & Tamu;
+    // Superadmin tetap melihat semua item. Filter ini murni tampilan —
+    // perhitungan performa, kategori, dan persentase tidak berubah.
+    var uRek = currentUser();
+    var itemsEval = (!uRek || uRek.role !== 'superadmin')
+        ? ev.items.filter(function(it) { return !it.hidden; })
+        : ev.items;
+    var itemsDenganRekom = itemsEval.map(function(it) {
         var kat = it.cat ? it.cat.label : null;
         // Kategori non-Indonesia (tabel norma RAST topendsports: Elite, Good, dst.)
         // dipetakan ke kategori Indonesia lewat persentase agar template, urutan,
